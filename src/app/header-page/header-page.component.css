@@ -1,0 +1,157 @@
+
+.example-container {
+    flex-direction: column;
+  }
+  .nav-list a:hover {
+    background-color:white;
+  }
+
+  nav{
+    background-color: lightcoral;
+    padding: 4px;
+    padding-bottom: 1px;
+  }
+ button{
+    font-size: 15px;
+
+ } 
+ button:hover{
+  background-color: whitesmoke;
+ }
+
+  mat-sidenav-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    
+  }
+  .example-spacer {
+    flex: 1 1 auto;
+   
+  }
+  
+  mat-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    
+  }
+  
+  router-outlet {
+    flex: 1;
+  }
+  
+  .sidebar {
+    width: 20%; /* Width of the sidebar */
+    height: 100vh; /* Full height of the viewport */
+    position: fixed;
+   background-color: whitesmoke;
+  
+  }
+  .sidebar a:hover {
+    color:blue;
+  
+  }
+  .sidebar:hover ~ .content {
+    margin-left: 260px; /* Adjust margin to match sidebar width on hover */
+  }
+  
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 200px; /* Adjust the width for smaller screens */
+    }
+    .sidebar:hover {
+      width: 210px; /* Slightly increase width on hover for smaller screens */
+    }
+  }
+
+  
+  .menu-icon, .close-icon {
+    transition: opacity 0.3s ease;
+  }
+  
+/* Ensure the toggle button is positioned correctly */
+.toggle-button {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-left: 16px; /* Adjust as needed */
+    z-index: 10; /* Ensure it is above other content */
+    transition: transform 0.3s ease; /* Smooth transition effect */
+  }
+  
+  /* Base styles for the menu icon */
+  .menu-icon {
+    font-size: 24px; /* Adjust size as needed */
+    color: black;
+    transition: opacity 0.3s ease; /* Smooth transition effect */
+  }
+  
+  /* Base styles for the close icon */
+  .close-icon {
+    font-size: 24px; /* Adjust size as needed */
+    color: black;
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition effects */
+  }
+  
+  /* When sidenav is opened, slide out the menu icon */
+  .mat-sidenav-opened ~ .toggle-button .menu-icon {
+    transform: translateX(-100%); /* Hide the menu icon */
+    opacity: 0; /* Hide the icon */
+  }
+  
+  /* When sidenav is closed, slide out the close icon */
+  .mat-sidenav-opened ~ .toggle-button .close-icon {
+    transform: translateX(0); /* Show the close icon */
+    opacity: 1; /* Show the icon */
+   
+  }
+  
+  /* When sidenav is closed, slide out the close icon */
+  .mat-sidenav ~ .toggle-button .menu-icon {
+    transform: translateX(0); /* Show the menu icon */
+    opacity: 1; /* Show the icon */
+  }
+  
+  /* When sidenav is closed, slide out the close icon */
+  .mat-sidenav ~ .toggle-button .close-icon {
+    transform: translateX(100%); /* Hide the close icon */
+    opacity: 0; /* Hide the icon */
+  }
+  
+  
+  .toggle-button .mat-icon {
+    transition: opacity 0.3s ease;
+  }
+  
+  .toggle-button .menu-icon.ng-hide {
+    opacity: 0;
+  }
+  
+  .toggle-button .close-icon.ng-show {
+    opacity: 1;
+  }
+  
+  @media (min-width: 768px) {
+    .toggle-button {
+      display: none;
+    }
+  }
+  
+  .loading-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; /* Make sure it appears above other content */
+    background-color:gray;
+    border-radius: 8px; /* Optional: Rounded corners */
+    padding: 100%; /* Optional: Add padding around the spinner */
+
+  }
+  
+  
+  
+  
+  
+  
