@@ -7,10 +7,23 @@
   <mat-sidenav-container class="example-container">
     <mat-sidenav #sidenav mode="over" [opened]="isMobile$ | async">
       <mat-nav-list class="sidebar">
-        <a mat-list-item  [routerLink]="['/files']" (click)="onNavItemClick(sidenav)">Files</a>
-        <a mat-list-item  [routerLink]="['/skills']" (click)="onNavItemClick(sidenav)">Skills</a>
-        <a mat-list-item [routerLink]="['/education']" (click)="onNavItemClick(sidenav)">Education</a>
-        <a mat-list-item [routerLink]="['/work']" (click)="onNavItemClick(sidenav)">Work</a>
+
+        <button mat-button [matMenuTriggerFor]="menu1"><i class="fas fa-file"></i>Files</button>
+        <mat-menu #menu1="matMenu">
+          <button mat-menu-item routerLink="files/employees" routerLinkActive="active">Employees</button>
+          <button mat-menu-item routerLink="files/clients" routerLinkActive="active">Clients</button>
+          <button mat-menu-item routerLink="files/branches" routerLinkActive="active">Branches</button>
+        </mat-menu>
+
+        <a mat-list-item  [routerLink]="['/attendance']" (click)="onNavItemClick(sidenav)">
+          <i class="fa-solid fa-clipboard-user"></i>Attendance
+        </a>
+        <a mat-list-item [routerLink]="['/education']" (click)="onNavItemClick(sidenav)">
+          <i class="fa-solid fa-p"></i>Payroll
+        </a>
+        <a mat-list-item [routerLink]="['/work']" (click)="onNavItemClick(sidenav)">
+          <i class="fa-solid fa-user"></i>User
+        </a>
       </mat-nav-list>
     </mat-sidenav>
     
