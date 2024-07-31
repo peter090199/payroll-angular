@@ -7,17 +7,19 @@
   <mat-sidenav-container class="example-container">
     <mat-sidenav #sidenav mode="over" [opened]="isMobile$ | async">
       <mat-nav-list class="sidebar">
-
-        <button mat-button [matMenuTriggerFor]="menu1"><i class="fas fa-file"></i>Files</button>
+       <a mat-list-item [matMenuTriggerFor]="menu1"><i class="fas fa-file"></i>Files</a>
         <mat-menu #menu1="matMenu">
-          <button mat-menu-item routerLink="files/employees" routerLinkActive="active">Employees</button>
-          <button mat-menu-item routerLink="files/clients" routerLinkActive="active">Clients</button>
-          <button mat-menu-item routerLink="files/branches" routerLinkActive="active">Branches</button>
+          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="files/employees" routerLinkActive="active">Employees</button>
+          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="files/clients" routerLinkActive="active">Clients</button>
+          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="files/branches" routerLinkActive="active">Branches</button>
         </mat-menu>
 
-        <a mat-list-item  [routerLink]="['/attendance']" (click)="onNavItemClick(sidenav)">
-          <i class="fa-solid fa-clipboard-user"></i>Attendance
-        </a>
+        <a mat-list-item [matMenuTriggerFor]="menu2"><i class="fa-solid fa-clipboard-user"></i>Attendance</a>
+        <mat-menu #menu2="matMenu">
+          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="attendance/cutofftimecards" routerLinkActive="active">CutOff Timecards</button>
+        </mat-menu>
+      
+      
         <a mat-list-item [routerLink]="['/education']" (click)="onNavItemClick(sidenav)">
           <i class="fa-solid fa-p"></i>Payroll
         </a>
@@ -49,8 +51,7 @@
                           <button mat-button [matMenuTriggerFor]="menu2">Attendance</button>
                           <mat-menu #menu2="matMenu">
                             <button mat-menu-item routerLink="attendance/cutofftimecards" routerLinkActive="active">CutOff Timecards</button>
-                            <button mat-menu-item>Clients</button>
-                            <button mat-menu-item>Branches</button>
+                           
                           </mat-menu>
                 
                           <button mat-button [matMenuTriggerFor]="menu3">Payroll</button>
@@ -77,15 +78,15 @@
                 </div>
                 <button mat-icon-button class="toggle-button" (click)="sidenav.toggle()">
                     <mat-icon class="menu-icon" *ngIf="!(sidenav.opened)">menu</mat-icon>
-                    <mat-icon class="close-icon" *ngIf="sidenav.opened">X</mat-icon>
-                    </button>
+                    <mat-icon class="close-icon" *ngIf="sidenav.opened">close</mat-icon>
+                </button>
             </div>
         </nav>
       </mat-toolbar>
       
       <router-outlet></router-outlet>
       <!-- <mat-divider></mat-divider> -->
-      <app-footer-page></app-footer-page>
+
     </mat-sidenav-content>
   </mat-sidenav-container>
   </body>

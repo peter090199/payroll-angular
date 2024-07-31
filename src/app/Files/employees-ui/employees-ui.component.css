@@ -1,0 +1,72 @@
+/* General Styles for the Card */
+.panel-container {
+    max-width: 100%; /* Ensure the card does not exceed the viewport width */
+    margin: 0 auto; /* Center the card horizontally */
+    padding: 16px; /* Add padding around the card */
+  }
+  
+  /* Button container to stack buttons vertically on small screens */
+  .button-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    gap: 16px; /* Space between elements */
+    margin-bottom: 4px; /* Space below the button container */
+  }
+  
+  /* Ensure form field and button take full width on small screens */
+  .example-form-field,
+  button.mat-raised-button {
+    width: 100%;
+  }
+  
+  /* Table styles */
+  mat-table {
+    width: 100%; /* Ensure the table takes full width */
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+  }
+  
+  /* Adjust paginator to fit on smaller screens */
+  mat-paginator {
+    width: 100%; /* Full width for paginator */
+    display: flex;
+    justify-content: center; /* Center paginator controls */
+  }
+  
+  /* Media query for tablets and larger screens */
+  @media (min-width: 600px) {
+    .button-container {
+      flex-direction: row; /* Stack elements horizontally on larger screens */
+      gap: 16px; /* Space between elements */
+    }
+  
+    /* Ensure form field and button are not full width on larger screens */
+    .example-form-field {
+      flex: 1; /* Take available space */
+      max-width: 400px; /* Set a maximum width */
+    }
+  
+    button.mat-raised-button {
+      max-width: 120px; /* Set a maximum width for the button */
+      height: 50px;
+    }
+  }
+  
+  /* Media query for mobile screens */
+  @media (max-width: 599px) {
+    .example-form-field {
+      font-size: 12px; /* Adjust font size for readability */
+    }
+  
+    button.mat-raised-button {
+      font-size: 14px; /* Adjust font size for readability */
+    }
+  
+    mat-table {
+      font-size: 12px; /* Adjust table font size for readability */
+    }
+  
+    mat-paginator {
+      font-size: 12px; /* Adjust paginator font size */
+    }
+  }
+  

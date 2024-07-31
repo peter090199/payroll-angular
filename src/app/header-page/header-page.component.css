@@ -42,12 +42,24 @@
   }
   
   .sidebar {
-    width: 20%; /* Width of the sidebar */
-    height: 100vh; /* Full height of the viewport */
-    position: fixed;
-   background-color: whitesmoke;
-  
+    height: 100vh; /* Full viewport height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    width: 250px; /* Adjust width as needed */
+    background-color: #f5f5f5; /* Optional background color */
+    border-right: 1px solid #ddd; /* Optional border for visual separation */
   }
+   .sidebar::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+  }
+  .sidebar::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scrollbar thumb */
+    border-radius: 4px; /* Rounded corners for the scrollbar thumb */
+  }
+  
+  .sidebar::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Darker color when hovering */
+  }
+  
   .sidebar a:hover {
     color:blue;
   
@@ -58,28 +70,13 @@
   
   @media (max-width: 768px) {
     .sidebar {
-      width: 200px; /* Adjust the width for smaller screens */
+      width: 300px; /* Adjust the width for smaller screens */
     }
-    .sidebar:hover {
-      width: 210px; /* Slightly increase width on hover for smaller screens */
-    }
-  }
-
-  
+   
   .menu-icon, .close-icon {
     transition: opacity 0.3s ease;
   }
-  
-/* Ensure the toggle button is positioned correctly */
-.toggle-button {
-    position: relative;
-    top: 0;
-    left: 0;
-    margin-left: 16px; /* Adjust as needed */
-    z-index: 10; /* Ensure it is above other content */
-    transition: transform 0.3s ease; /* Smooth transition effect */
-  }
-  
+    
   /* Base styles for the menu icon */
   .menu-icon {
     font-size: 24px; /* Adjust size as needed */
@@ -92,7 +89,23 @@
     font-size: 24px; /* Adjust size as needed */
     color: black;
     transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition effects */
+ 
   }
+    
+  }
+
+  
+  
+/* Ensure the toggle button is positioned correctly */
+.toggle-button {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-left: 16px; /* Adjust as needed */
+    z-index: 10; /* Ensure it is above other content */
+    transition: transform 0.3s ease; /* Smooth transition effect */
+  }
+
   
   /* When sidenav is opened, slide out the menu icon */
   .mat-sidenav-opened ~ .toggle-button .menu-icon {
@@ -149,10 +162,63 @@
     padding: 100%; /* Optional: Add padding around the spinner */
 
   }
+/* Styling for mat-list-item */
+a[mat-list-item] {
+  padding: 8px 16px; /* Adjust padding as needed */
+  border-radius: 4px; /* Optional border radius for rounded corners */
+  font-size: 14px; /* Adjust font size */
+  display: flex; /* Align items horizontally */
+  align-items: center; /* Center items vertically */
+  text-decoration: none; /* Remove underline from links */
+  color: #333; /* Text color */
+  background-color: #f5f5f5; /* Background color */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transitions for hover effect */
+}
 
-  /* icons */
-  
-  
+a[mat-list-item]:hover {
+  background-color: #e0e0e0; /* Hover background color */
+  color: #000; /* Hover text color */
+}
+
+/* Icon styling inside mat-list-item */
+a[mat-list-item] i {
+  margin-right: 8px; /* Space between icon and text */
+  font-size: 16px; /* Icon size */
+}
+
+/* Styling for mat-menu items */
+a[mat-menu-item] {
+  padding: 8px 16px; /* Adjust padding as needed */
+  font-size: 14px; /* Adjust font size */
+  text-decoration: none; /* Remove underline from links */
+  color: #333; /* Text color */
+  background-color: #fff; /* Background color */
+  border-radius: 4px; /* Optional border radius for rounded corners */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transitions for hover effect */
+}
+
+
+a[mat-menu-item]:hover {
+  background-color: #f0f0f0; /* Hover background color */
+  color: #000; /* Hover text color */
+}
+
+
+
+/* Hover effect for mat-menu-item buttons */
+button[mat-menu-item]:hover {
+  background-color: #f0f0f0; /* Background color on hover */
+  color: #000000; /* Text color on hover */
+}
+
+/* Styling for the icon within mat-menu-item */
+button[mat-menu-item] i {
+  margin-right: 2px; /* Space between icon and text */
+  font-size: 16px; /* Adjust icon size */
+}
+
+
+
   
   
   
