@@ -8,6 +8,33 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./employees.component.css']
 })
 export class EmployeesComponent implements OnInit {
+
+isTrue : boolean = false;
+pageSizeOptions   : number[] = [5, 10, 25, 100];
+  searchKey         : string = "";
+  placeHolder       : string = "Search";
+  employees         : any=[];
+  defaultColumns: string[] = [    
+    'CustomerId',
+    'CustomerName',
+    'Address',
+    
+  ];
+ 
+  onUpdate(_t75: any) {
+    throw new Error('Method not implemented.');
+    }
+    onDelete(_t75: any) {
+    throw new Error('Method not implemented.');
+    }
+  // applyFilter(){
+  //   this.listData.filter = this.searchKey.trim().toLocaleLowerCase();
+  // }
+
+  clearSearch(){
+    this.searchKey = "";
+   }
+
   displayedColumns: string[] = ['id', 'name', 'position'];
   dataSource = new MatTableDataSource<Employee>(ELEMENT_DATA);
   value = '';

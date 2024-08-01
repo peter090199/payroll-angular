@@ -1,21 +1,21 @@
-<mat-card class="panel-container">
-    <mat-card-content>
-      
-      <!-- New Employee Button -->
-      <div class="button-container">
-      
-        <mat-form-field class="example-form-field" appearance="fill">
-          <mat-label>Search</mat-label>
-          <input matInput type="text" [(ngModel)]="value">
-          <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
-        <button mat-raised-button color="primary" (click)="addNewEmployee()">New Employee</button>
-      </div>
-  
-      <!-- Table with Paginator -->
-      <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<section class="section">
+
+  <div class="search-div">
+    <mat-form-field class="w-10" floatLabel="never"  appearance="standard">
+        <input matInput [(ngModel)]="searchKey" [placeholder]="placeHolder" autocomplete="false">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <button type="button" mat-raised-button color="primary" (click)="addNewEmployee()"> <mat-icon>add_circle</mat-icon> New</button>
+</div>
+
+  <div class="mat-elevation-z2">
+      <mat-table [dataSource]="dataSource" matSort>
+        <ng-container *ngFor="let dc of defaultColumns" [matColumnDef]="dc" sticky >
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{dc}}</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element[dc]}}</mat-cell>
+      </ng-container>
       
         <!-- Column Definitions -->
         <ng-container matColumnDef="id">
@@ -36,6 +36,29 @@
         <!-- Header and Row Definitions -->
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+          <mat-cell *matCellDef="let element">
+              <button mat-icon-button color="primary" (click)="onUpdate(element)"><mat-icon>edit</mat-icon> </button>
+              <button mat-icon-button color="warn" (click)="onDelete(element)"><mat-icon>delete</mat-icon> </button>
+          </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="loading">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+            <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+        </mat-footer-cell>
+     </ng-container>
+       <ng-container matColumnDef="noData">
+    
+            <mat-footer-cell *matFooterCellDef colspan="6">
+                    No data.
+                </mat-footer-cell>
+            </ng-container>
+            <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isTrue}"></mat-footer-row>
+            <mat-footer-row *matFooterRowDef="['noData']"  [ngClass]="{'hide': employees.length > 0}"></mat-footer-row>
+            
       </mat-table>
       
       <!-- Paginator -->
@@ -44,6 +67,5 @@
                      [pageSizeOptions]="[5, 10, 25, 100]"
                      aria-label="Select page">
       </mat-paginator>
-    </mat-card-content>
-  </mat-card>
-  
+  </div>
+</section>

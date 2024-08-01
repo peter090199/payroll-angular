@@ -1,16 +1,62 @@
-/* General Styles for the Card */
-.panel-container {
-    max-width: 100%; /* Ensure the card does not exceed the viewport width */
-    margin: 0 auto; /* Center the card horizontally */
-    padding: 16px; /* Add padding around the card */
+
+.search-div
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px; /* Padding around the content */
+    max-width: 600px;
+}
+.w-10 {
+  width: 80%; /* Full width of the parent container */
+  max-width: 220px; /* Maximum width of the form field */
+}
+@media (max-width: 600px) {
+  .search-div {
+    padding: 8px; /* Reduced padding for smaller screens */
   }
-  
+
+  .w-10 {
+    max-width: 100%; /* Full width on smaller screens */
+  }
+}
+/* Button styling */
+button[mat-raised-button] {
+  width: auto; /* Button width adjusts based on content */
+}
+
+
   /* Button container to stack buttons vertically on small screens */
   .button-container {
     display: flex;
     flex-direction: column; /* Stack elements vertically */
-    gap: 16px; /* Space between elements */
-    margin-bottom: 4px; /* Space below the button container */
+    gap: 10px; /* Space between elements */
+    margin-bottom: 1px; /* Space below the button container */
+  }
+  .example-form-field {
+    width: 100%; /* Full width of the parent container */
+    height: 56px; /* Height of the form field */
+  }
+  
+  .mat-form-field {
+    height: 10%; /* Ensure the form field takes up the full height of the container */
+  }
+  
+  .mat-form-field .mat-form-field-flex {
+    height: 50%; /* Ensure the input field takes up the full height */
+  }
+  
+  input[matInput] {
+    height: 20%; /* Ensure the input takes up the full height */
+    line-height: 56px; /* Align text vertically in the center */
+  }
+  
+  button[mat-icon-button] {
+    height: 12px; /* Match the height of the form field */
+    line-height: 56px; /* Center icon vertically */
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   /* Ensure form field and button take full width on small screens */
@@ -29,7 +75,7 @@
   mat-paginator {
     width: 100%; /* Full width for paginator */
     display: flex;
-    justify-content: center; /* Center paginator controls */
+    justify-content: right; /* Center paginator controls */
   }
   
   /* Media query for tablets and larger screens */
@@ -47,7 +93,7 @@
   
     button.mat-raised-button {
       max-width: 120px; /* Set a maximum width for the button */
-      height: 50px;
+      height: 40px;
     }
   }
   
@@ -59,6 +105,8 @@
   
     button.mat-raised-button {
       font-size: 14px; /* Adjust font size for readability */
+      margin-bottom: 12px;
+      margin-top: 4px;
     }
   
     mat-table {
