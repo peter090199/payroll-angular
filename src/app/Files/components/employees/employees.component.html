@@ -1,0 +1,49 @@
+<mat-card class="panel-container">
+    <mat-card-content>
+      
+      <!-- New Employee Button -->
+      <div class="button-container">
+      
+        <mat-form-field class="example-form-field" appearance="fill">
+          <mat-label>Search</mat-label>
+          <input matInput type="text" [(ngModel)]="value">
+          <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="addNewEmployee()">New Employee</button>
+      </div>
+  
+      <!-- Table with Paginator -->
+      <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      
+        <!-- Column Definitions -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="position">
+          <mat-header-cell *matHeaderCellDef> Position </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+        </ng-container>
+      
+        <!-- Header and Row Definitions -->
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      
+      <!-- Paginator -->
+      <mat-paginator [length]="100"
+                     [pageSize]="10"
+                     [pageSizeOptions]="[5, 10, 25, 100]"
+                     aria-label="Select page">
+      </mat-paginator>
+    </mat-card-content>
+  </mat-card>
+  

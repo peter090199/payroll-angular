@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BranchesUiComponent } from './branches-ui.component';
+import { ClientsComponent } from './clients.component';
 
-describe('BranchesUiComponent', () => {
-  let component: BranchesUiComponent;
-  let fixture: ComponentFixture<BranchesUiComponent>;
+describe('ClientsComponent', () => {
+  let component: ClientsComponent;
+  let fixture: ComponentFixture<ClientsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BranchesUiComponent ]
+      declarations: [ ClientsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BranchesUiComponent);
+    fixture = TestBed.createComponent(ClientsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

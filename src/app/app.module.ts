@@ -20,9 +20,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { FooterPageComponent } from './footer-page/footer-page.component';
 import { DashboardUiComponent } from './dashboard-ui/dashboard-ui.component';
-import { EmployeesUiComponent } from './Files/employees-ui/employees-ui.component';
-import { ClientsUiComponent } from './Files/clients-ui/clients-ui.component';
-import { BranchesUiComponent } from './Files/branches-ui/branches-ui.component';
+import { EmployeesUIComponent } from './Files/componentsUI/employees-ui/employees-ui.component';
+import { EmployeesComponent } from './Files/components/employees/employees.component';
+import { ClientsComponent } from './Files/components/clients/clients.component';
+
+
 
 
 @NgModule({
@@ -31,9 +33,12 @@ import { BranchesUiComponent } from './Files/branches-ui/branches-ui.component';
     HeaderPageComponent,
     FooterPageComponent,
     DashboardUiComponent,
-    EmployeesUiComponent,
-    ClientsUiComponent,
-    BranchesUiComponent,
+    EmployeesUIComponent,
+    EmployeesUIComponent,
+    EmployeesComponent,
+    ClientsComponent,
+
+
 
     
   ],

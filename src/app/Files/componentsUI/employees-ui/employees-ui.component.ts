@@ -7,7 +7,7 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './employees-ui.component.html',
   styleUrls: ['./employees-ui.component.css']
 })
-export class EmployeesUiComponent implements OnInit {
+export class EmployeesUIComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'position'];
   dataSource = new MatTableDataSource<Employee>(ELEMENT_DATA);
   value = '';
