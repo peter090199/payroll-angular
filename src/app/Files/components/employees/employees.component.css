@@ -22,7 +22,7 @@
 }
 /* Button styling */
 button[mat-raised-button] {
-  width: 30px; /* Button width adjusts based on content */
+  width: auto; /* Button width adjusts based on content */
 }
 
 
@@ -105,6 +105,7 @@ button[mat-raised-button] {
   
     button.mat-raised-button {
       font-size: 14px; /* Adjust font size for readability */
+      margin-bottom: 12px;
       margin-top: 4px;
     }
   

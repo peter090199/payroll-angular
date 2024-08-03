@@ -1,0 +1,39 @@
+/* General form container styling */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  max-width: 600px;
+  margin: auto;
+
+}
+
+
+/* Styling for form fields */
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px; /* Space between fields */
+}
+
+mat-form-field .mat-label {
+  font-weight: bold;
+}
+
+mat-form-field .mat-error {
+  font-size: 0.875rem; /* Adjust error font size */
+}
+
+/* Styling for action buttons */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px; /* Space between buttons */
+}
+
+button[mat-raised-button] {
+  margin-top: 16px; /* Space above the button */
+}
+
+button[mat-stroked-button] {
+  margin-top: 16px; /* Space above the button */
+}

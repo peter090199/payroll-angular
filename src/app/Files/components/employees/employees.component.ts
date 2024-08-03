@@ -1,6 +1,8 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { EmployeesUIComponent } from '../../componentsUI/employees-ui/employees-ui.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-employees',
@@ -8,7 +10,9 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./employees.component.css']
 })
 export class EmployeesComponent implements OnInit {
-
+  
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  constructor(private dialog : MatDialog){}
 isTrue : boolean = false;
 pageSizeOptions   : number[] = [5, 10, 25, 100];
   searchKey         : string = "";
@@ -20,6 +24,14 @@ pageSizeOptions   : number[] = [5, 10, 25, 100];
     'Address',
     
   ];
+  
+  addNewEmployee(): void {
+    const dialogConfig        = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus    = true;
+    dialogConfig.width        = '600px';
+    this.dialog.open(EmployeesUIComponent,dialogConfig);
+  }
  
   onUpdate(_t75: any) {
     throw new Error('Method not implemented.');
@@ -38,8 +50,6 @@ pageSizeOptions   : number[] = [5, 10, 25, 100];
   displayedColumns: string[] = ['id', 'name', 'position'];
   dataSource = new MatTableDataSource<Employee>(ELEMENT_DATA);
   value = '';
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
 
   ngOnInit(): void {
     this.dataSource.paginator = this.paginator;
@@ -51,10 +61,6 @@ pageSizeOptions   : number[] = [5, 10, 25, 100];
     this.dataSource.filter = filterValue;
   }
 
-  addNewEmployee(): void {
-    // Logic to add a new employee
-    console.log('New Employee button clicked');
-  }
 }
 
 export interface Employee{
