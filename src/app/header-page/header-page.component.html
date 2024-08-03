@@ -2,11 +2,11 @@
     <mat-progress-spinner mode="indeterminate" color="primary" diameter="50"></mat-progress-spinner>
   </div>
    -->
-  
-  <!-- <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="50"> -->
   <mat-sidenav-container class="example-container">
     <mat-sidenav #sidenav mode="over" [opened]="isMobile$ | async">
       <mat-nav-list class="sidebar">
+        <a mat-list-item  routerLink="dashboard" routerLinkActive="active">  <i class="fas fa-home"></i>Dashboard</a>
+
        <a mat-list-item [matMenuTriggerFor]="menu1"><i class="fas fa-file"></i>Files</a>
         <mat-menu #menu1="matMenu">
           <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="files/employees" routerLinkActive="active">Employees</button>
@@ -18,14 +18,17 @@
         <mat-menu #menu2="matMenu">
           <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="attendance/cutofftimecards" routerLinkActive="active">CutOff Timecards</button>
         </mat-menu>
-      
-      
-        <a mat-list-item [routerLink]="['/education']" (click)="onNavItemClick(sidenav)">
-          <i class="fa-solid fa-p"></i>Payroll
-        </a>
-        <a mat-list-item [routerLink]="['/work']" (click)="onNavItemClick(sidenav)">
-          <i class="fa-solid fa-user"></i>User
-        </a>
+
+        <a mat-list-item [matMenuTriggerFor]="menu3"><i class="fa-solid fa-p"></i>Payroll</a>
+        <mat-menu #menu3="matMenu">
+          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="payroll/generatepayroll" routerLinkActive="active">Generate Payroll</button>
+        </mat-menu>
+
+        <a mat-list-item [matMenuTriggerFor]="menu4"><i class="fa-solid fa-clipboard-user"></i>User</a>
+        <mat-menu #menu4="matMenu">
+          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="user/profile">Profile</button>
+        </mat-menu>
+   
       </mat-nav-list>
     </mat-sidenav>
     
@@ -34,7 +37,7 @@
         <nav class="navbar navbar-expand-sm  navbar-dark fixed-top">
           <div class="container-fluid">
           
-                <span>My Portfolio</span>
+                <span>Payroll System</span>
                 <span class="example-spacer"></span>
                 <div class="example-button-row">
                     <nav *ngIf="!(isMobile$ | async)"  class="nav-link">
@@ -86,8 +89,8 @@
       
       <router-outlet></router-outlet>
       <!-- <mat-divider></mat-divider> -->
-
+      <!-- <app-footer-page></app-footer-page> -->
     </mat-sidenav-content>
   </mat-sidenav-container>
-  <!-- </body> -->
-  
+
+ 
