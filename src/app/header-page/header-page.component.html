@@ -42,7 +42,7 @@
                 <div class="example-button-row">
                     <nav *ngIf="!(isMobile$ | async)"  class="nav-link">
                         <ul class="nav-list">
-                        <button mat-button  routerLink="dashboard" routerLinkActive="active">Dashboard</button>
+                        <button mat-button  routerLink="/dashboard" routerLinkActive="active">Dashboard</button>
                          
                         <button mat-button [matMenuTriggerFor]="menu1">Files</button>
                           <mat-menu #menu1="matMenu">

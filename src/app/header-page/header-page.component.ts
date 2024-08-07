@@ -4,12 +4,20 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 
+
+
 @Component({
   selector: 'app-header-page',
   templateUrl: './header-page.component.html',
-  styleUrls: ['./header-page.component.css']
+  styleUrls: ['./header-page.component.css'],
+
 })
 export class HeaderPageComponent implements OnInit {
+  animateCards = false;
+
+  triggerAnimation() {
+    this.animateCards = !this.animateCards; // Toggle to trigger animation
+  }
   isLoading = true; // Start with loading true
   onNavItemClick(sidenav: MatSidenav) {
     sidenav.close();
