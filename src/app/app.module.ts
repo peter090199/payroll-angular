@@ -23,6 +23,8 @@ import { DashboardUiComponent } from './dashboard-ui/dashboard-ui.component';
 import { EmployeesUIComponent } from './Files/componentsUI/employees-ui/employees-ui.component';
 import { EmployeesComponent } from './Files/components/employees/employees.component';
 import { ClientsComponent } from './Files/components/clients/clients.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 
@@ -37,6 +39,8 @@ import { ClientsComponent } from './Files/components/clients/clients.component';
     EmployeesUIComponent,
     EmployeesComponent,
     ClientsComponent,
+    LoginComponent,
+    RegisterComponent,
 
 
 

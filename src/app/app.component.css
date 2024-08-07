@@ -1,0 +1,15 @@
+/* Basic reset and layout settings */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+  }
+  
+  app-root {
+    display: block;
+    height: 100vh;
+  }
+  
+  /* Add any additional styles here */
+  
