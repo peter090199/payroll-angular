@@ -3,7 +3,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-
+import { LoginService } from '../services/login.service';
 
 
 @Component({
@@ -13,6 +13,7 @@ import { map, shareReplay } from 'rxjs/operators';
 
 })
 export class HeaderPageComponent implements OnInit {
+
   animateCards = false;
 
   triggerAnimation() {
@@ -35,7 +36,7 @@ export class HeaderPageComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver,private logoutService:LoginService) {}
 
   ngOnInit(): void {
     this.isMobile$ = this.breakpointObserver.observe([Breakpoints.Handset])
@@ -50,5 +51,8 @@ export class HeaderPageComponent implements OnInit {
     setTimeout(() => {
       this.isLoading = false; // Set loading to false after data is fetched
     }, 3000); // Adjust time as necessary
+  }
+  logout() {
+    this.logoutService.logout();
   }
 }

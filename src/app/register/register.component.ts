@@ -1,30 +1,51 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiService } from '../services/api.service';
+import { RegisterService } from '../services/register.service';
+import { NotificationsService } from '../Global/notifications.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
-  registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: ApiService) {
+export class RegisterComponent implements OnInit {
+  registerForm: FormGroup; // Initialize with an empty FormGroup
+
+  constructor(private fb: FormBuilder, private registerService: RegisterService,
+    private notificationService:NotificationsService
+  ) { 
     this.registerForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      UserName: ['', [Validators.required]],
+      Password: ['', [Validators.required, Validators.minLength(6)]]
     });
+
   }
 
+  ngOnInit(): void {
+  //  this.initializeForm();
+  }
+
+  // private initializeForm(): void {
+  
+  // }
+  
   onSubmit(): void {
     if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
-      this.authService.registter(this.registerForm.value).subscribe(
-    
-        response => alert('Registration successful'),
-        error => alert('Registration failed')
-      );
+      this.registerService.register(this.registerForm.getRawValue()).subscribe({
+              next: (res) => {
+                this.notificationService.popupSwalMixin("Successfully Saved. " + res.message);
+                this.Reset();
+              },
+              error: (err) => {
+                this.notificationService.toastrError(err.message);
+              },
+            });
     }
+  }
+  Reset()
+  {
+    this.registerForm.controls['UserName'].setValue('');
+    this.registerForm.controls['Password'].setValue('');
   }
 }

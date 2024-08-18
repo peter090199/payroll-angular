@@ -10,6 +10,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
   styleUrls: ['./employees.component.css']
 })
 export class EmployeesComponent implements OnInit {
+
+
   
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(private dialog : MatDialog){}
@@ -25,6 +27,7 @@ pageSizeOptions   : number[] = [5, 10, 25, 100];
     
   ];
   
+
   addNewEmployee(): void {
     const dialogConfig        = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -61,6 +64,12 @@ pageSizeOptions   : number[] = [5, 10, 25, 100];
     this.dataSource.filter = filterValue;
   }
 
+  openDialog() {
+    this.dialog.open(EmployeesUIComponent, {
+    });
+    
+
+}
 }
 
 export interface Employee{

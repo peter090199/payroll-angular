@@ -27,6 +27,7 @@
         <a mat-list-item [matMenuTriggerFor]="menu4"><i class="fa-solid fa-clipboard-user"></i>User</a>
         <mat-menu #menu4="matMenu">
           <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="user/profile">Profile</button>
+          <button mat-menu-item (click)="onNavItemClick(sidenav)" (click)="logout()">Logout</button>
         </mat-menu>
    
       </mat-nav-list>
@@ -42,7 +43,7 @@
                 <div class="example-button-row">
                     <nav *ngIf="!(isMobile$ | async)"  class="nav-link">
                         <ul class="nav-list">
-                        <button mat-button  routerLink="/dashboard" routerLinkActive="active">Dashboard</button>
+                        <button mat-button  routerLink="dashboard" routerLinkActive="active">Dashboard</button>
                          
                         <button mat-button [matMenuTriggerFor]="menu1">Files</button>
                           <mat-menu #menu1="matMenu">
@@ -68,8 +69,8 @@
                             <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example user icon">person</mat-icon>
                           </button>
                           <mat-menu #menu4="matMenu">
-                            <button mat-menu-item routerLink="userprofileui" routerLinkActive="active">Profile</button>
-                           
+                            <button mat-menu-item routerLink="userprofileui" >Profile</button>
+                            <button mat-menu-item (click)="logout()">Log out</button>
                           </mat-menu>
                         </ul>
                       </nav>

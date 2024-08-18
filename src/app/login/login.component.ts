@@ -1,37 +1,59 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiService } from '../services/api.service';
+import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
+import { NotificationsService } from '../Global/notifications.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-  loginForm: FormGroup;
+export class LoginComponent implements OnInit{
 
-  constructor(private fb: FormBuilder, private authService: ApiService, private router: Router) {
+  ngOnInit(): void {
+   // this.initializeForm();
+  }
+  
+  // private initializeForm(): void {
+  //   this.loginForm = this.fb.group({
+  //     UserName: ['', [Validators.required]],
+  //     Password: ['', [Validators.required, Validators.minLength(6)]]
+  //   });
+  // }
+  
+  hide = true;
+  loginForm: FormGroup;
+  hidePassword: any;
+
+  constructor(private fb: FormBuilder, private router: Router,private loginService: LoginService,
+    private notificationService:NotificationsService
+  ) { 
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      UserName: ['', [Validators.required, Validators.email]],
+      Password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+
+  }
+
+  onSubmit() 
+  {
+    const { UserName, Password } = this.loginForm.value;
+    this.loginService.login(UserName, Password).subscribe({
+      next: (res) => {
+        this.notificationService.popupSwalMixin(res.message);
+        this.router.navigate(['/header/dashboard']);
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          // If unauthorized, redirect to login
+          this.router.navigate(['/login']);
+        } else {
+          this.notificationService.toastrError(err.error.message);
+        }
+      }
     });
   }
 
-  // onSubmit(): void {
-  //   if (this.loginForm.valid) {
-  //     this.authService.login(this.loginForm.value).subscribe(
-  //       response => alert('Login successful'),
-  //       error => alert('Login failed')
-  //     );
-  //   }
-  // }
-  onSubmit(): void {
-    if (this.loginForm.valid) {
-      const { username, password } = this.loginForm.value;
-      if (this.authService.login(username, password)) {
-        this.router.navigate(['/dashboard']);
-      }
-    }
-  }
 }
+

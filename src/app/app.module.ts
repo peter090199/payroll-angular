@@ -25,9 +25,7 @@ import { EmployeesComponent } from './Files/components/employees/employees.compo
 import { ClientsComponent } from './Files/components/clients/clients.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-
-
-
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -41,10 +39,6 @@ import { RegisterComponent } from './register/register.component';
     ClientsComponent,
     LoginComponent,
     RegisterComponent,
-
-
-
-    
   ],
   imports: [
     BrowserModule,
@@ -62,11 +56,15 @@ import { RegisterComponent } from './register/register.component';
     MatMenuModule,
     MatSelectModule,
     MatIconModule,
+    
 
     
 
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, JwtHelperService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }
+  ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

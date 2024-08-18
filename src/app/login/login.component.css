@@ -60,4 +60,5 @@
   .login-form a:hover {
     text-decoration: underline;
   }
-  
+  /* Styles for mat-icon within the button */
+

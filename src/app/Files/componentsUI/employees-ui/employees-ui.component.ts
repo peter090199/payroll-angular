@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Inject} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -22,19 +22,22 @@ export class EmployeesUIComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private dialog            : MatDialog,
     private dialogRef         : MatDialogRef<EmployeesUIComponent>,
-   
+    @Inject(MAT_DIALOG_DATA) public data: any
 
-  ) { }
-
+  ) {}
+  
   ngOnInit(): void {
-    // Initialize form group with form controls and validators
-    this.formGroup = this.fb.group({
-      employeeId: ['', Validators.required],
-      employeeName: ['', Validators.required],
-      address: ['', Validators.required],
-      contactNo: ['', [Validators.required, Validators.pattern('^[0-9]+$')]]
-    });
+    this.initializeForm();
   }
+
+  initializeForm(): void{
+    this.formGroup = this.fb.group({
+      employeeId: [this.data?.employeeId || '', Validators.required],
+      employeeName: [this.data?.employeeName || '', Validators.required],
+      address: [this.data?.address || '', Validators.required],
+      contactNo: [this.data?.contactNo || '', [Validators.required, Validators.pattern(/^\d{10}$/)]]
+    });
+}
 
   onSubmit(): void {
     if (this.formGroup.valid) {
