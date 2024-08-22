@@ -11,6 +11,7 @@ import { HeaderPageComponent } from './header-page/header-page.component';
 import { ClientsComponent } from './Files/components/clients/clients.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'register', component: RegisterComponent }, // Accessible to everyone
   { path: 'login', component: LoginComponent }, // Accessible to everyone
 

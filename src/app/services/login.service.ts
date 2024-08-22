@@ -33,7 +33,7 @@ export class LoginService {
 
   // Login method
   login(UserName: string, Password: string): Observable<any> {
-    return this.http.post<any>(_url + 'login', { UserName, Password }).pipe(
+    return this.http.post<any>(_url + 'Auth/login', { UserName, Password }).pipe(
       tap(res => {
         // Assuming `res` contains the token
         if (res && res.token) {
@@ -56,7 +56,7 @@ export class LoginService {
   }
 
   // Handle login errors
-  private handleLoginError<T>(operation = 'login', result?: T) {
+  private handleLoginError<T>(operation = 'Auth/login', result?: T) {
     return (error: any): Observable<T> => {
       if (error.status === 401) {
         this.handleUnauthorizedError();

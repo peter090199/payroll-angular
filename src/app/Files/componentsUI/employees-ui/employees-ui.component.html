@@ -1,58 +1,30 @@
-<!-- <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="form-container">
-    <mat-form-field appearance="fill">
-      <mat-label>Employee ID</mat-label>
-      <input matInput formControlName="employeeId" placeholder="Input Employee ID" autocomplete="off" required>
-    
-    </mat-form-field>
-  
-    <mat-form-field appearance="fill">
-      <mat-label>Employee Name</mat-label>
-      <input matInput formControlName="employeeName" placeholder="Input Employee Name" autocomplete="off" required>
-   
-    </mat-form-field>
-  
-    <mat-form-field appearance="fill">
-      <mat-label>Address</mat-label>
-      <input matInput formControlName="address" placeholder="Input Address" autocomplete="off" required>
-    
-    </mat-form-field>
-  
-    <mat-form-field appearance="fill">
-      <mat-label>Contact No</mat-label>
-      <input matInput formControlName="contactNo" placeholder="Input Contact No" type="tel" autocomplete="off" required>
-    
-    </mat-form-field>
-  
-    <div class="form-actions">
-      <button mat-raised-button color="primary" type="submit">Submit</button>
-      <button style="background-color: rgb(212, 48, 48); color: white;" mat-stroked-button color="warn" type="button" (click)="onCancel()">Cancel</button>
-    </div>/
-  </form> -->
-
-<h2 mat-dialog-title>Employee Form</h2>
-<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="form-container">
-  <mat-form-field appearance="fill">
-    <mat-label>Employee ID</mat-label>
-    <input matInput formControlName="employeeId" placeholder="Input Employee ID" autocomplete="off" required>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>Employee Name</mat-label>
-    <input matInput formControlName="employeeName" placeholder="Input Employee Name" autocomplete="off" required>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>Address</mat-label>
-    <input matInput formControlName="address" placeholder="Input Address" autocomplete="off" required>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>Contact No</mat-label>
-    <input matInput formControlName="contactNo" placeholder="Input Contact No" type="tel" autocomplete="off" required>
-  </mat-form-field>
-
-  <div class="form-actions">
-    <button mat-raised-button color="primary" type="submit">Submit</button>
-    <button mat-stroked-button color="warn" type="button" (click)="onCancel()">Cancel</button>
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+  <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title>{{btnSave}} Item</h2>
+<mat-divider></mat-divider>
+<form [formGroup]="EmployeeForm" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content>
+      <mat-form-field  appearance="standard">
+          <mat-label>EmpID</mat-label>
+          <mat-checkbox (change)="onCheck($event.checked)" [checked]=" !data || ( data.EmpID != null ? data.EmpID.includes('CTU') :  true) " [disabled]="data">
+          </mat-checkbox>
+          <input class="" matInput placeholder="Input EmpID" autocomplete="off"  required formControlName="EmpID">
+      </mat-form-field>
+      <mat-form-field class="" appearance="standard">
+          <mat-label>Employee Name</mat-label>
+          <input matInput placeholder="Input EmployeeName" autocomplete="off" required formControlName="EmpName">
+      </mat-form-field>
+          <mat-form-field class="" appearance="standard">
+              <mat-label>Address</mat-label>
+              <input matInput placeholder="Input Address" autocomplete="off" required formControlName="Address">
+          </mat-form-field>
+              <mat-form-field class=""  appearance="standard">
+                  <mat-label>ContactNo</mat-label>
+                  <input matInput placeholder="Input ContactNo"  autocomplete="off" required formControlName="ContactNo">
+              </mat-form-field>
+  </div>
+  <div mat-dialog-actions [align]="'end'" class="mb-3">
+      <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="EmployeeForm.invalid">{{btnSave}}</button>
   </div>
 </form>

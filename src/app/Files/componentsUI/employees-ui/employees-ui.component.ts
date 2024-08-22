@@ -1,15 +1,9 @@
-import { Component, OnInit,Inject} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { EmployeesService } from 'src/app/services/employees.service';
+import { NotificationsService } from 'src/app/Global/notifications.service';
 
-// Define the interface for form data
-export interface FormData {
-  [key: string]: any; // Index signature for dynamic property access
-  customerId: string;
-  customerName: string;
-  address: string;
-  contactNo: string;
-}
 
 @Component({
   selector: 'app-employees-ui',
@@ -17,38 +11,93 @@ export interface FormData {
   styleUrls: ['./employees-ui.component.css']
 })
 export class EmployeesUIComponent implements OnInit {
-  formGroup!: FormGroup; // Initialized to be properly handled
 
-  constructor(private fb: FormBuilder,
+  btnSave     : string = "Save";
+  loading     : boolean = false;
+  EmployeeForm = new FormGroup({
+              EmpID    : new FormControl(''),
+              EmpName  : new FormControl(''),
+              Address      : new FormControl(''),
+              ContactNo     : new FormControl(''),
+            
+  });
+
+  constructor(
     private dialog            : MatDialog,
     private dialogRef         : MatDialogRef<EmployeesUIComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    private empService: EmployeesService,
+    private notificationService   : NotificationsService,
+    @Inject(MAT_DIALOG_DATA) public data: any, // passing data here from update
 
-  ) {}
-  
+  ) { }
+
   ngOnInit(): void {
-    this.initializeForm();
+    if (this.data) {
+      if(this.data.id){
+        this.btnSave = "Update";
+        this.EmployeeForm.controls['EmpID'].disable();
+        this.GetItemFormData();
+      }
+    }else{
+      this.onCheck(true);
+    }
+   
   }
 
-  initializeForm(): void{
-    this.formGroup = this.fb.group({
-      employeeId: [this.data?.employeeId || '', Validators.required],
-      employeeName: [this.data?.employeeName || '', Validators.required],
-      address: [this.data?.address || '', Validators.required],
-      contactNo: [this.data?.contactNo || '', [Validators.required, Validators.pattern(/^\d{10}$/)]]
-    });
-}
+  
+  GetItemFormData(){
+    if(this.data.Id){
+      this.EmployeeForm.controls['Id'].setValue(this.data.Id);
+      this.EmployeeForm.controls['EmpID'].setValue(this.data.EmpID);
+    }
 
-  onSubmit(): void {
-    if (this.formGroup.valid) {
-      // Cast form value to FormData type for better type safety
-      const formData: FormData = this.formGroup.value;
-      console.log(formData);
-      // Handle form submission logic here
+    this.EmployeeForm.controls['EmpName'].setValue(this.data.EmpName);
+    this.EmployeeForm.controls['Address'].setValue(this.data.Address);
+    this.EmployeeForm.controls['ContactNo'].setValue(this.data.ContactNo);
+   
+  }
+
+  onSubmit(){
+   
+    this.loading = true;
+    this.empService.postEmployee(this.EmployeeForm.getRawValue()).subscribe({
+      next:(res)=>{
+       this.notificationService.popupSwalMixin("Successfuly Saved.");
+        if(this.btnSave == 'Save'){
+          this.ResetForm();
+          this.loading = false;
+        }
+        if(this.btnSave == 'Update'){
+          this.notificationService.popupSwalMixin("Successfuly Updated.");
+          this.dialogRef.close();
+          this.loading = false;
+        }
+        
+      },
+      error:(err)=> {
+        this.notificationService.toastrError(err.error);
+      },
+    });
+  }
+
+  onCheck(data: any) {
+    if (data) {
+      this.EmployeeForm.controls['EmpID'].disable();
+      this.EmployeeForm.controls['EmpID'].setValue('generated');
+    }
+    else {
+      this.EmployeeForm.controls['EmpID'].enable();
+      this.EmployeeForm.controls['EmpID'].setValue('');
     }
   }
 
-  onCancel(): void {
-    this.dialogRef.close();
+
+  ResetForm(){
+    this.EmployeeForm.controls['EmpID'].setValue('');
+    this.EmployeeForm.controls['EmpName'].setValue('');
+    this.EmployeeForm.controls['Address'].setValue('');
+    this.EmployeeForm.controls['ContactNo'].setValue('');
+    
   }
+
 }

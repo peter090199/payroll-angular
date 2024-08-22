@@ -10,14 +10,11 @@ import {ToastrModule} from 'ngx-toastr';
 import { MaterialModule } from 'src/Material/Material.module';
 import { DatePipe } from '@angular/common';
 
+
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
+
 import { HttpClientModule } from '@angular/common/http';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
+
 import { FooterPageComponent } from './footer-page/footer-page.component';
 import { DashboardUiComponent } from './dashboard-ui/dashboard-ui.component';
 import { EmployeesUIComponent } from './Files/componentsUI/employees-ui/employees-ui.component';
@@ -42,21 +39,15 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
     MaterialModule,
     ToastrModule,
     ToastrModule.forRoot(),
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatFormFieldModule,
-    MatMenuModule,
-    MatSelectModule,
-    MatIconModule,
-    
+
 
     
 

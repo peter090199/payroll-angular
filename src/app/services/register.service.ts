@@ -17,11 +17,11 @@ export class RegisterService {
   constructor(private http: HttpClient) { }
 
   register(registerForm:any): Observable<any>{
-    return this.http.post<any>(_url+'register',registerForm).pipe(
+    return this.http.post<any>(_url+'Auth/register',registerForm).pipe(
       tap(()=>{
         this.RequiredRefresh.next();
       }),
-      catchError(this.handleError<any>('login'))
+      catchError(this.handleError<any>('Auth/register'))
     );
     
   }
