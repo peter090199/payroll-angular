@@ -9,10 +9,7 @@ import { HeaderPageComponent } from './header-page/header-page.component';
 import {ToastrModule} from 'ngx-toastr';
 import { MaterialModule } from 'src/Material/Material.module';
 import { DatePipe } from '@angular/common';
-
-
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
 import { HttpClientModule } from '@angular/common/http';
 
 import { FooterPageComponent } from './footer-page/footer-page.component';
@@ -23,6 +20,7 @@ import { ClientsComponent } from './Files/components/clients/clients.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { EditEmployeeComponent} from './Files/componentsUI/edit-employees/edit-employee-component';
 
 @NgModule({
   declarations: [
@@ -36,6 +34,7 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
     ClientsComponent,
     LoginComponent,
     RegisterComponent,
+    EditEmployeeComponent,
   ],
   imports: [
     BrowserModule,

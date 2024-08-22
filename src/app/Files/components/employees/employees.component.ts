@@ -1,128 +1,91 @@
-import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
-import { firstValueFrom } from 'rxjs';
+import { Employees } from 'src/app/Model/Employees';
 import { EmployeesService } from 'src/app/services/employees.service';
-import { NotificationsService } from 'src/app/Global/notifications.service';
 import { EmployeesUIComponent } from '../../componentsUI/employees-ui/employees-ui.component';
-
+import { EditEmployeeComponent } from '../../componentsUI/edit-employees/edit-employee-component';
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
   styleUrls: ['./employees.component.css']
 })
-export class EmployeesComponent implements OnInit, AfterViewInit {
 
-  listData = new MatTableDataSource<any>;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
-  searchKey: string = "";
-  placeHolder: string = "Search Item";
-  employees: any[] = [];
-  TransDateFrom: any = new Date();
-  TransDateTo: any = new Date();
+export class EmployeesComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'empID', 'empName', 'address', 'contactNo', 'actions'];
+  dataSource = new MatTableDataSource<Employees>();
+  isLoading = true;
+  placeHolder       : string = "Search";
+  searchKey         : string = "";
+  // employees         : any=[];
 
-  defaultColumns: string[] = [
-    'EmpID',
-    'EmpName',
-    'Address',
-  ];
-  numberColumns: string[] = [
-    'ContactNo',
-  ];
-  addedColumns: string[] = [
-    'actions',
-  ];
-  mergeColumns = this.defaultColumns.concat(this.numberColumns,this.addedColumns);
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
-  isTrue: boolean = false;
-
-  @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
-  @ViewChild(MatSort) sort: MatSort | null = null;
-
-  constructor(
-    private employeesService: EmployeesService,
-    private dialog: MatDialog,
-    private notificationsService: NotificationsService,
-  ) { }
+  constructor(private employeeService: EmployeesService, private dialog : MatDialog) {}
 
   ngOnInit(): void {
-    this.GetItems();
-    this.employeesService.RequiredRefresh.subscribe(() => {
-      this.GetItems();
-    });
+    this.loadEmployees();
   }
-
-  ngAfterViewInit(): void {
-    this.listData.paginator = this.paginator;
-    this.listData.sort = this.sort;
+  applyFilter(){
+    this.dataSource.filter = this.searchKey.trim().toLocaleLowerCase();
   }
-  async GetItems(){
-    this.isTrue = true;
-    this.employees = await firstValueFrom(this.employeesService.getEmployees());
-    if(this.employees)
-      this.isTrue = false;
-    this.DisplayRecords();
-    
-  }
-  applyFilter() {
-    if (this.listData) {
-      this.listData.filter = this.searchKey.trim().toLowerCase();
-      if (this.listData.paginator) {
-        this.listData.paginator.firstPage();
-      }
-    }
-  }
-
-  clearSearch() {
+  clearSearch(){
     this.searchKey = "";
     this.applyFilter();
   }
-
-  DisplayRecords() {
-    var items = this.employees;
-
-    this.listData = new MatTableDataSource(items);
-    this.listData.paginator = this.paginator;
-  }
-
-  onUpdate(data: any) {
-    const dialogConfig = new MatDialogConfig();
+  onClickNew(){
+    const dialogConfig        = new MatDialogConfig();
     dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '350px';
-    dialogConfig.data = data;
-    this.dialog.open(EmployeesUIComponent, dialogConfig);
+    dialogConfig.autoFocus    = true;
+    dialogConfig.width        = '400px';
+    this.dialog.open(EmployeesUIComponent,dialogConfig);
   }
+  
 
-  onClickNew() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '350px';
-    this.dialog.open(EmployeesUIComponent, dialogConfig);
+  loadEmployees(): void {
+    this.employeeService.getEmployees().subscribe(
+      (employees) => {
+        this.dataSource.data = employees;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.isLoading = false;
+      },
+      (error) => {
+        console.error('Error fetching employee data:', error);
+        this.isLoading = false;
+      }
+    );
   }
-
-  onDelete(data: any) {
-    if (!data) {
-      this.notificationsService.toastrWarning('No record selected!');
-      return;
+ 
+  deleteEmployee(id: number): void {
+    if (confirm('Are you sure you want to delete this employee?')) {
+      this.employeeService.deleteEmployee(id).subscribe(
+        () => {
+          console.log(`Employee with ID: ${id} deleted successfully`);
+          this.loadEmployees(); // Refresh the table after deleting an employee
+        },
+        (error) => {
+          console.error('Error deleting employee', error);
+        }
+      );
     }
+  }
+  
+  editEmployee(id: number): void {
+    const employee = this.dataSource.data.find(emp => emp.Id == id);
+    const dialogRef = this.dialog.open(EditEmployeeComponent, {
+      width: '400px',
+      data: employee
+    });
 
-    // Example confirmation dialog
-    this.notificationsService.popupWarning("Customer Name", "Are you sure to delete this customer?").then((result) => {
-      if (result.value) {
-        this.employeesService.deleteEmployee(data.EmpID).subscribe({
-          next: (res) => {
-            this.notificationsService.toastrSuccess(res.message);
-            this.GetItems(); // Refresh the data
-          },
-          error: (err) => {
-            this.notificationsService.toastrError(err.error);
-          },
-        });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadEmployees(); // Refresh the table after editing an employee
       }
     });
   }
+
 }

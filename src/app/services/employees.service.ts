@@ -4,7 +4,7 @@ import { Subject, Observable, tap, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { _url } from 'src/global-variables';
-import { url } from 'inspector';
+import { Employees } from '../Model/Employees';
 
 @Injectable({
   providedIn: 'root'
@@ -23,15 +23,9 @@ export class EmployeesService {
     return this._refreshrequired;
   }
 
-  getEmployees() : Observable<any>{
-    return this.http.get<any>(_url+'Employees');
+  getEmployees(): Observable<Employees[]> {
+    return this.http.get<Employees[]>(_url+"Employees");
   }
-
-  // // GET: Fetch a single employee by ID
-  // getEmployee(id: number): Observable<EmployeesModel> {
-  //   return this.http.get<EmployeesModel>(`${_url}/${id}`);
-  // }
-
     // save 
     postEmployee(EmployeeForm:any): Observable<any>{
       return this.http.post<any>(_url+'Employees/SavedEmployees',EmployeeForm).pipe(
@@ -51,7 +45,7 @@ export class EmployeesService {
 
   // DELETE: Remove an employee
   deleteEmployee(id: number): Observable<any> {
-    return this.http.delete<any>(`${_url}/${id}`);
+    return this.http.delete<any>(_url +id);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
