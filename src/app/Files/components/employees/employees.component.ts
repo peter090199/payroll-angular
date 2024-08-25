@@ -3,10 +3,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
-import { Employees } from 'src/app/Model/Employees';
 import { EmployeesService } from 'src/app/services/employees.service';
 import { EmployeesUIComponent } from '../../componentsUI/employees-ui/employees-ui.component';
-import { EditEmployeeComponent } from '../../componentsUI/edit-employees/edit-employee-component';
+import { firstValueFrom } from 'rxjs';
+import { NotificationsService } from 'src/app/Global/notifications.service';
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -15,77 +15,96 @@ import { EditEmployeeComponent } from '../../componentsUI/edit-employees/edit-em
 
 export class EmployeesComponent implements OnInit {
   displayedColumns: string[] = ['id', 'empID', 'empName', 'address', 'contactNo', 'actions'];
-  dataSource = new MatTableDataSource<Employees>();
+  employee = new MatTableDataSource<any>([]);
   isLoading = true;
   placeHolder       : string = "Search";
   searchKey         : string = "";
-  // employees         : any=[];
+  employees         : any=[];
+  pageSizeOptions   : number[] = [5, 10, 25, 100];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private employeeService: EmployeesService, private dialog : MatDialog) {}
+  constructor(private employeeService: EmployeesService, 
+    private dialog : MatDialog,
+    private notificationsService : NotificationsService
+  ){}
 
   ngOnInit(): void {
     this.loadEmployees();
   }
+
   applyFilter(){
-    this.dataSource.filter = this.searchKey.trim().toLocaleLowerCase();
+    this.employee.filter = this.searchKey.trim().toLocaleLowerCase();
   }
   clearSearch(){
     this.searchKey = "";
     this.applyFilter();
   }
-  onClickNew(){
-    const dialogConfig        = new MatDialogConfig();
+
+  onClickNew(): void {
+    const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
-    dialogConfig.autoFocus    = true;
-    dialogConfig.width        = '400px';
-    this.dialog.open(EmployeesUIComponent,dialogConfig);
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '400px';
+    const dialogRef = this.dialog.open(EmployeesUIComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadEmployees(); // Refresh the table after dialog closure
+      }
+    });
   }
   
-
-  loadEmployees(): void {
-    this.employeeService.getEmployees().subscribe(
-      (employees) => {
-        this.dataSource.data = employees;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.isLoading = false;
-      },
-      (error) => {
-        console.error('Error fetching employee data:', error);
-        this.isLoading = false;
-      }
-    );
-  }
- 
-  deleteEmployee(id: number): void {
-    if (confirm('Are you sure you want to delete this employee?')) {
-      this.employeeService.deleteEmployee(id).subscribe(
-        () => {
-          console.log(`Employee with ID: ${id} deleted successfully`);
-          this.loadEmployees(); // Refresh the table after deleting an employee
-        },
-        (error) => {
-          console.error('Error deleting employee', error);
-        }
-      );
+  async loadEmployees(): Promise<void> {
+    try {
+      this.isLoading = true;
+      this.employees = await firstValueFrom(this.employeeService.getEmployees());
+      this.employee.data = this.employees;
+      this.employee.paginator = this.paginator;
+      this.employee.sort = this.sort;
+      this.isLoading = false;
+  
+    } catch (error) {
+      console.error('Error fetching employee data:', error);
+      this.isLoading = false;
     }
   }
-  
-  editEmployee(id: number): void {
-    const employee = this.dataSource.data.find(emp => emp.Id == id);
-    const dialogRef = this.dialog.open(EditEmployeeComponent, {
+ 
+  deleteEmployee(employee:any){
+    if(!employee){
+      this.notificationsService.toastrWarning('No record selected!');
+      
+    }
+    else{
+      this.notificationsService.popupWarning(employee.empName,"-"+"Are you sure to delete this employee?").then((result) => {
+        if (result.value) {
+          this.employeeService.deleteEmployee(employee.empID).subscribe({
+              next:()=>{
+                this.notificationsService.popupSwalMixin("Successfuly deleted "+ employee.empName);
+                this.loadEmployees();
+              },
+              error:()=>{
+                this.notificationsService.toastrError("no employee id");
+                this.loadEmployees();
+              },
+          });
+        }
+      });
+    }
+  }
+
+  editEmployee(data?: any): void {
+    const dialogRef = this.dialog.open(EmployeesUIComponent, {
       width: '400px',
-      data: employee
+      data: data || null
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.loadEmployees(); // Refresh the table after editing an employee
+        this.loadEmployees();
       }
     });
   }
+
 
 }

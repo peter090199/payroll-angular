@@ -49,7 +49,7 @@ export class NotificationsService {
         });
         Toast.fire({
           icon: "success",
-          title: "Successfully Saved"
+          title: title
         });
 
   }

@@ -5,11 +5,17 @@ import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { _url } from 'src/global-variables';
 import { Employees } from '../Model/Employees';
+import { url } from 'inspector';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeesService {
+  // Define HTTP options for headers, if needed
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+  _url: any;
 
 
   constructor(
@@ -27,7 +33,7 @@ export class EmployeesService {
     return this.http.get<Employees[]>(_url+"Employees");
   }
     // save 
-    postEmployee(EmployeeForm:any): Observable<any>{
+    postEmployee(EmployeeForm: any): Observable<any>{
       return this.http.post<any>(_url+'Employees/SavedEmployees',EmployeeForm).pipe(
         tap(()=>{
           this.RequiredRefresh.next();
@@ -35,19 +41,26 @@ export class EmployeesService {
         catchError(this.handleError<any>('Auth/register'))
       );
     }
+
+    // updateEmployee(id: number): Observable<void> {
+    //   return this.http.put<void>(_url+'Employees/'+id);
+    // }
+    
     
   // // PUT: Update an existing employee
-  // putEmployee(id: number, employee: EmployeesModel): Observable<any> {
-  //   return this.http.put<any>(`${_url}/${id}`, employee, {
-  //     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  //   });
-  // }
-
-  // DELETE: Remove an employee
-  deleteEmployee(id: number): Observable<any> {
-    return this.http.delete<any>(_url +id);
+  updateEmployee(EmployeeForm: any, id: number): Observable<void> {
+    const url = `${_url}Employees/${id}`; // Correct URL construction
+    return this.http.put<void>(url, EmployeeForm, this.httpOptions) // Pass EmployeeForm as the body
+      .pipe(
+        catchError(this.handleError<void>('updateEmployee'))
+      );
   }
+  
+    deleteEmployee(empID: string): Observable<void> {
+      return this.http.delete<void>(`${_url}Employees/${empID}`);
+    }
 
+    
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); 

@@ -1,9 +1,10 @@
 export interface Employees{
+    message: "";
     Id: number;
-    EmpID:string;
-    EmpName: string;
-    Address: string;
-    ContactNo:string;
+    EmpID:"";
+    EmpName: "";
+    Address: "";
+    ContactNo:"";
     // Add other properties as needed
   }
   

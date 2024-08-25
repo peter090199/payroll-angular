@@ -1,7 +1,7 @@
 <button mat-icon-button class="close-button" [mat-dialog-close]="true">
   <mat-icon class="close-icon" color="warn">close</mat-icon>
 </button>
-<h2 mat-dialog-title>{{btnSave}} Item</h2>
+<h2 mat-dialog-title>{{btnSave}} Employee</h2>
 <mat-divider></mat-divider>
 <form [formGroup]="EmployeeForm" (ngSubmit)="onSubmit()">
   <div mat-dialog-content>
@@ -9,22 +9,23 @@
           <mat-label>EmpID</mat-label>
           <mat-checkbox (change)="onCheck($event.checked)" [checked]=" !data || ( data.EmpID != null ? data.EmpID.includes('CTU') :  true) " [disabled]="data">
           </mat-checkbox>
-          <input class="" matInput placeholder="Input EmpID" autocomplete="off"  required formControlName="EmpID">
+          <input class="" matInput placeholder="Input EmpID" autocomplete="off"  required formControlName="empID">
       </mat-form-field>
       <mat-form-field class="" appearance="standard">
           <mat-label>Employee Name</mat-label>
-          <input matInput placeholder="Input EmployeeName" autocomplete="off" required formControlName="EmpName">
+          <input matInput placeholder="Input EmployeeName" autocomplete="off" required formControlName="empName">
       </mat-form-field>
           <mat-form-field class="" appearance="standard">
               <mat-label>Address</mat-label>
-              <input matInput placeholder="Input Address" autocomplete="off" required formControlName="Address">
+              <input matInput placeholder="Input Address" autocomplete="off" required formControlName="address">
           </mat-form-field>
               <mat-form-field class=""  appearance="standard">
                   <mat-label>ContactNo</mat-label>
-                  <input matInput placeholder="Input ContactNo"  autocomplete="off" required formControlName="ContactNo">
+                  <input matInput placeholder="Input ContactNo"  autocomplete="off" required formControlName="contactNo">
               </mat-form-field>
   </div>
-  <div mat-dialog-actions [align]="'end'" class="mb-3">
+  <div mat-dialog-actions [align]="'end'" class="mb-4">
       <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="EmployeeForm.invalid">{{btnSave}}</button>
   </div>
+  
 </form>

@@ -14,30 +14,31 @@ export class EmployeesUIComponent implements OnInit {
 
   btnSave     : string = "Save";
   loading     : boolean = false;
-  EmployeeForm = new FormGroup({
-              EmpID    : new FormControl(''),
-              EmpName  : new FormControl(''),
-              Address      : new FormControl(''),
-              ContactNo     : new FormControl(''),
-            
-  });
 
+  EmployeeForm = new FormGroup({
+              id      : new FormControl(0),
+              empID    : new FormControl(''),
+              empName  : new FormControl(''),
+              address      : new FormControl(''),
+              contactNo     : new FormControl(''),
+  });
+  
   constructor(
     private dialog            : MatDialog,
     private dialogRef         : MatDialogRef<EmployeesUIComponent>,
     private empService: EmployeesService,
     private notificationService   : NotificationsService,
     @Inject(MAT_DIALOG_DATA) public data: any, // passing data here from update
-
   ) { }
 
   ngOnInit(): void {
     if (this.data) {
       if(this.data.id){
         this.btnSave = "Update";
-        this.EmployeeForm.controls['EmpID'].disable();
+        this.EmployeeForm.controls['empID'].disable();
         this.GetItemFormData();
       }
+  
     }else{
       this.onCheck(true);
     }
@@ -46,58 +47,64 @@ export class EmployeesUIComponent implements OnInit {
 
   
   GetItemFormData(){
-    if(this.data.Id){
-      this.EmployeeForm.controls['Id'].setValue(this.data.Id);
-      this.EmployeeForm.controls['EmpID'].setValue(this.data.EmpID);
-    }
-
-    this.EmployeeForm.controls['EmpName'].setValue(this.data.EmpName);
-    this.EmployeeForm.controls['Address'].setValue(this.data.Address);
-    this.EmployeeForm.controls['ContactNo'].setValue(this.data.ContactNo);
-   
+    this.EmployeeForm.controls['id'].setValue(this.data.id);
+    this.EmployeeForm.controls['empID'].setValue(this.data.empID);
+    this.EmployeeForm.controls['empName'].setValue(this.data.empName);
+    this.EmployeeForm.controls['address'].setValue(this.data.address);
+    this.EmployeeForm.controls['contactNo'].setValue(this.data.contactNo);
   }
 
-  onSubmit(){
-   
+  onSubmit() {
     this.loading = true;
-    this.empService.postEmployee(this.EmployeeForm.getRawValue()).subscribe({
-      next:(res)=>{
-       this.notificationService.popupSwalMixin("Successfuly Saved.");
-        if(this.btnSave == 'Save'){
-          this.ResetForm();
+   const employeeData = this.EmployeeForm.getRawValue();
+  
+    if (this.btnSave == "Save")
+       {
+        this.empService.postEmployee(employeeData).subscribe({
+          next: (res) => {
+            this.notificationService.popupSwalMixin("Successfully Saved.");
+            this.ResetForm();
+            this.loading = false;
+          },
+          error: (err) => {
+            this.notificationService.toastrError(err.error);
+            this.loading = false;
+          },
+        });
+    } 
+    else if (this.btnSave == 'Update') 
+      {
+      this.empService.updateEmployee(employeeData,this.data.id).subscribe({
+        next: (res) => {
+          this.notificationService.popupSwalMixin("Successfully Updated.");
+          this.dialogRef.close(true); // Notify the parent component to reload data
           this.loading = false;
-        }
-        if(this.btnSave == 'Update'){
-          this.notificationService.popupSwalMixin("Successfuly Updated.");
-          this.dialogRef.close();
+        },
+        error: (err) => {
+          this.notificationService.toastrError(err.error);
           this.loading = false;
-        }
-        
-      },
-      error:(err)=> {
-        this.notificationService.toastrError(err.error);
-      },
-    });
+        },
+      });
+    }
   }
+  
 
   onCheck(data: any) {
     if (data) {
-      this.EmployeeForm.controls['EmpID'].disable();
-      this.EmployeeForm.controls['EmpID'].setValue('generated');
+      this.EmployeeForm.controls['empID'].disable();
+      this.EmployeeForm.controls['empID'].setValue('generated');
     }
     else {
-      this.EmployeeForm.controls['EmpID'].enable();
-      this.EmployeeForm.controls['EmpID'].setValue('');
+      this.EmployeeForm.controls['empID'].enable();
+      this.EmployeeForm.controls['empID'].setValue('');
     }
   }
 
-
   ResetForm(){
-    this.EmployeeForm.controls['EmpID'].setValue('');
-    this.EmployeeForm.controls['EmpName'].setValue('');
-    this.EmployeeForm.controls['Address'].setValue('');
-    this.EmployeeForm.controls['ContactNo'].setValue('');
-    
+    this.EmployeeForm.controls['empID'].setValue('');
+    this.EmployeeForm.controls['empName'].setValue('');
+    this.EmployeeForm.controls['address'].setValue('');
+    this.EmployeeForm.controls['contactNo'].setValue('');
   }
 
 }
