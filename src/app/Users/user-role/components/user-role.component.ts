@@ -43,16 +43,16 @@ export class UserRoleComponent implements OnInit {
   }
 
   onClickNew(): void {
-    // const dialogConfig = new MatDialogConfig();
-    // dialogConfig.disableClose = true;
-    // dialogConfig.autoFocus = true;
-    // dialogConfig.width = '400px';
-    // const dialogRef = this.dialog.open(EmployeesUIComponent, dialogConfig);
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result) {
-    //     this.loadEmployees(); // Refresh the table after dialog closure
-    //   }
-    // });
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '400px';
+    const dialogRef = this.dialog.open(UsersUIRoleComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadUsers(); // Refresh the table after dialog closure
+      }
+    });
   }
   
   async loadUsers(): Promise<void> {
