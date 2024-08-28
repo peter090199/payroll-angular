@@ -40,8 +40,8 @@ export class LoginComponent implements OnInit{
   {
     const { UserName, Password } = this.loginForm.value;
     this.loginService.login(UserName, Password).subscribe({
-      next: (res) => {
-        this.notificationService.popupSwalMixin(res.message);
+      next:() => {
+        this.notificationService.popupSwalMixin("Successfuly Login.");
         this.router.navigate(['/header/dashboard']);
       },
       error: (err) => {

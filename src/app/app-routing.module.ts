@@ -9,7 +9,7 @@ import { ProtectedComponent } from './protected/protected.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HeaderPageComponent } from './header-page/header-page.component';
 import { ClientsComponent } from './Files/components/clients/clients.component';
-
+import { UserRoleComponent } from './Users/user-role/components/user-role.component';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'register', component: RegisterComponent }, // Accessible to everyone
@@ -30,6 +30,7 @@ const routes: Routes = [
           { path: 'dashboard', component: DashboardUiComponent },
           { path: 'files/employees', component: EmployeesComponent },
           { path: 'files/clients', component: ClientsComponent },
+          { path: 'user/role', component: UserRoleComponent },
         ]
       }
     ]

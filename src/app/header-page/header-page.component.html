@@ -24,12 +24,18 @@
           <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="payroll/generatepayroll" routerLinkActive="active">Generate Payroll</button>
         </mat-menu>
 
+        <a mat-list-item [matMenuTriggerFor]="menu5"><i class="fa-solid fa-clipboard-user"></i>User Role</a>
+        <mat-menu #menu5="matMenu">
+          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="user/role">Users</button>
+        </mat-menu>
+
         <a mat-list-item [matMenuTriggerFor]="menu4"><i class="fa-solid fa-clipboard-user"></i>User</a>
         <mat-menu #menu4="matMenu">
           <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="user/profile">Profile</button>
           <button mat-menu-item (click)="onNavItemClick(sidenav)" (click)="logout()">Logout</button>
         </mat-menu>
-   
+
+     
       </mat-nav-list>
     </mat-sidenav>
     
@@ -51,20 +57,24 @@
                             <button mat-menu-item routerLink="files/clients" routerLinkActive="active">Clients</button>
                             <button mat-menu-item routerLink="files/branches" routerLinkActive="active">Branches</button>
                           </mat-menu>
-                
+
                           <button mat-button [matMenuTriggerFor]="menu2">Attendance</button>
                           <mat-menu #menu2="matMenu">
                             <button mat-menu-item routerLink="attendance/cutofftimecards" routerLinkActive="active">CutOff Timecards</button>
-                           
                           </mat-menu>
-                
+
                           <button mat-button [matMenuTriggerFor]="menu3">Payroll</button>
                           <mat-menu #menu3="matMenu">
                             <button mat-menu-item>Generate Payroll</button>
                             <button mat-menu-item>Payroll Batches</button>
                             <button mat-menu-item>Payslip Records</button>
                           </mat-menu>
-                
+                          
+                          <button mat-button [matMenuTriggerFor]="menu4">Users</button>
+                          <mat-menu #menu4="matMenu">
+                           <button mat-menu-item routerLink="user/role" routerLinkActive="active">User Role</button>
+                          </mat-menu>
+
                           <button mat-button [matMenuTriggerFor]="menu4">
                             <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example user icon">person</mat-icon>
                           </button>

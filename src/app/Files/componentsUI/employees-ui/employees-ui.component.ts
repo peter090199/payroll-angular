@@ -77,7 +77,7 @@ export class EmployeesUIComponent implements OnInit {
       this.empService.updateEmployee(employeeData,this.data.id).subscribe({
         next: (res) => {
           this.notificationService.popupSwalMixin("Successfully Updated.");
-          this.dialogRef.close(true); // Notify the parent component to reload data
+          this.dialogRef.close(true); 
           this.loading = false;
         },
         error: (err) => {
