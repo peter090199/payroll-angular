@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+
 import { FooterPageComponent } from './footer-page/footer-page.component';
 import { DashboardUiComponent } from './dashboard-ui/dashboard-ui.component';
 import { EmployeesUIComponent } from './Files/componentsUI/employees-ui/employees-ui.component';
@@ -23,6 +24,7 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { EditEmployeeComponent} from './Files/componentsUI/edit-employees/edit-employee-component';
 import { UserRoleComponent } from './Users/user-role/components/user-role.component';
 import { UsersUIRoleComponent } from './Users/componentsUI/users-ui-role/users-ui-role.component';
+import { AccessrightsComponent } from './Users/user-role/components/accessrights/accessrights.component';
 
 
 @NgModule({
@@ -40,6 +42,7 @@ import { UsersUIRoleComponent } from './Users/componentsUI/users-ui-role/users-u
     EditEmployeeComponent,
     UserRoleComponent,
     UsersUIRoleComponent,
+    AccessrightsComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +54,7 @@ import { UsersUIRoleComponent } from './Users/componentsUI/users-ui-role/users-u
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+
 
 
     

@@ -38,7 +38,7 @@ postEmployee(userForm: any): Observable<any>{
     
   // // PUT: Update an existing employee
   updateEmployee(userData: any, id: number): Observable<void> {
-    const url = `${_url}Employees/${id}`; // Correct URL construction
+    const url = `${_url}Auth/UpdateUser/${id}`; // Correct URL construction
     return this.http.put<void>(url, userData) // Pass EmployeeForm as the body
       .pipe(
         catchError(this.handleError<void>('updateEmployee'))
@@ -46,9 +46,9 @@ postEmployee(userForm: any): Observable<any>{
   }
 
   
-    // deleteEmployee(empID: string): Observable<void> {
-    //   return this.http.delete<void>(`${_url}Employees/${empID}`);
-    // }
+  deleteEmployee(id: number): Observable<void> {
+    return this.http.delete<void>(`${_url}Auth/DeleteUser/${id}`);
+  }
 
     
   private handleError<T>(operation = 'operation', result?: T) {

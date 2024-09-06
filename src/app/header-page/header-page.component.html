@@ -27,6 +27,7 @@
         <a mat-list-item [matMenuTriggerFor]="menu5"><i class="fa-solid fa-clipboard-user"></i>User Role</a>
         <mat-menu #menu5="matMenu">
           <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="user/role">Users</button>
+          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="user/accessrights" >Access Rights</button>
         </mat-menu>
 
         <a mat-list-item [matMenuTriggerFor]="menu4"><i class="fa-solid fa-clipboard-user"></i>User</a>
@@ -73,12 +74,14 @@
                           <button mat-button [matMenuTriggerFor]="menu4">Users</button>
                           <mat-menu #menu4="matMenu">
                            <button mat-menu-item routerLink="user/role" routerLinkActive="active">User Role</button>
+                           <button mat-menu-item routerLink="user/accessrights" >Access Rights</button>
                           </mat-menu>
+                          
 
-                          <button mat-button [matMenuTriggerFor]="menu4">
+                          <button mat-button [matMenuTriggerFor]="menu5">
                             <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example user icon">person</mat-icon>
                           </button>
-                          <mat-menu #menu4="matMenu">
+                          <mat-menu #menu5="matMenu">
                             <button mat-menu-item routerLink="userprofileui" >Profile</button>
                             <button mat-menu-item (click)="logout()">Log out</button>
                           </mat-menu>

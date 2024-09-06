@@ -1,0 +1,35 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, Observable, of, Subject, tap } from 'rxjs';
+import { _url } from 'src/global-variables';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AccessrightsService {
+
+  constructor( private http: HttpClient,) { }
+
+  private _refreshrequired = new Subject<void>();
+  get RequiredRefresh() {
+    return this._refreshrequired;
+  }
+
+  saveUserAccess(accessRightName: any): Observable<any>{
+    return this.http.post<any>(_url+'UserAccessrights',accessRightName).pipe(
+      tap(()=>{
+        this.RequiredRefresh.next();
+      }),
+      catchError(this.handleError<any>('UserAccessrights'))
+    );
+  }
+   
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error); 
+      return of(result as T);
+    };
+  }
+ 
+  
+}

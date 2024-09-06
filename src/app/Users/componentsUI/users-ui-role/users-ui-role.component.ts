@@ -90,7 +90,7 @@ export class UsersUIRoleComponent implements OnInit {
     else if (this.btnSave == 'Update') 
       {
       this.userService.updateEmployee(userData,this.data.id).subscribe({
-        next: () => {
+        next: (res) => {
           this.notificationService.popupSwalMixin("Successfully Updated.");
           this.dialogRef.close(true); 
           this.loading = false;

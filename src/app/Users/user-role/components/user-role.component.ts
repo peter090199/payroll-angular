@@ -70,29 +70,28 @@ export class UserRoleComponent implements OnInit {
     }
   }
  
-  deleteEmployee(employee:any){
-    if(!employee){
+  deleteEmployee(user:any){
+    if(!user){
       this.notificationsService.toastrWarning('No record selected!');
       
     }
+    else{
+      this.notificationsService.popupWarning(user.userName,"-"+"Are you sure to delete this user?").then((result) => {
+        if (result.value) {
+          this.usersService.deleteEmployee(user.id).subscribe({
+              next:()=>{
+                this.notificationsService.popupSwalMixin("Successfuly deleted "+ user.userName);
+                this.loadUsers();
+              },
+              error:()=>{
+                this.notificationsService.toastrError("no user id");
+                this.loadUsers();
+              },
+          });
+        }
+     });
+   }
   }
-    // else{
-    //   this.notificationsService.popupWarning(employee.empName,"-"+"Are you sure to delete this employee?").then((result) => {
-    //     if (result.value) {
-    //       this.employeeService.deleteEmployee(employee.empID).subscribe({
-    //           next:()=>{
-    //             this.notificationsService.popupSwalMixin("Successfuly deleted "+ employee.empName);
-    //             this.loadEmployees();
-    //           },
-    //           error:()=>{
-    //             this.notificationsService.toastrError("no employee id");
-    //             this.loadEmployees();
-    //           },
-    //       });
-    //     }
-    //  });
-   // }
-  
 
   editEmployee(data?: any): void {
     const dialogRef = this.dialog.open(UsersUIRoleComponent, {
