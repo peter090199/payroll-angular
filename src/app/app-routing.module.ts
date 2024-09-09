@@ -9,8 +9,9 @@ import { ProtectedComponent } from './protected/protected.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HeaderPageComponent } from './header-page/header-page.component';
 import { ClientsComponent } from './Files/components/clients/clients.component';
-import { UserRoleComponent } from './Users/user-role/components/user-role.component';
-import { AccessrightsComponent } from './Users/user-role/components/accessrights/accessrights.component';
+import { UserRoleComponent } from './Users/componentsTable/user-role.component';
+import { AccessrightsComponent } from './Users/componentsTable/accessrights.component';
+import { MenusTableComponent } from './Users/componentsTable/menus-table.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -34,7 +35,7 @@ const routes: Routes = [
           { path: 'files/clients', component: ClientsComponent },
           { path: 'user/role', component: UserRoleComponent },
           { path: 'user/accessrights', component: AccessrightsComponent },
-
+          { path: 'user/menus', component: MenusTableComponent },
         ]
       }
     ]

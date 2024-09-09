@@ -22,9 +22,12 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { EditEmployeeComponent} from './Files/componentsUI/edit-employees/edit-employee-component';
-import { UserRoleComponent } from './Users/user-role/components/user-role.component';
-import { UsersUIRoleComponent } from './Users/componentsUI/users-ui-role/users-ui-role.component';
-import { AccessrightsComponent } from './Users/user-role/components/accessrights/accessrights.component';
+import { UserRoleComponent } from './Users/componentsTable/user-role.component';
+import { UsersUIRoleComponent } from './Users/componentsUI/users-ui-role.component';
+import { AccessrightsComponent } from './Users/componentsTable/accessrights.component';
+import { MenusTableComponent } from './Users/componentsTable/menus-table.component';
+import { MenusUIComponent } from './Users/componentsUI/menus-ui.component';
+import { SubModulesUIComponent } from './Users/componentsUI/sub-modules-ui.component';
 
 
 @NgModule({
@@ -43,6 +46,9 @@ import { AccessrightsComponent } from './Users/user-role/components/accessrights
     UserRoleComponent,
     UsersUIRoleComponent,
     AccessrightsComponent,
+    MenusTableComponent,
+    MenusUIComponent,
+    SubModulesUIComponent,
   ],
   imports: [
     BrowserModule,

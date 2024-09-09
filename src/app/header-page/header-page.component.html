@@ -28,6 +28,7 @@
         <mat-menu #menu5="matMenu">
           <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="user/role">Users</button>
           <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="user/accessrights" >Access Rights</button>
+          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="user/menus" >Menus</button>
         </mat-menu>
 
         <a mat-list-item [matMenuTriggerFor]="menu4"><i class="fa-solid fa-clipboard-user"></i>User</a>
@@ -75,6 +76,7 @@
                           <mat-menu #menu4="matMenu">
                            <button mat-menu-item routerLink="user/role" routerLinkActive="active">User Role</button>
                            <button mat-menu-item routerLink="user/accessrights" >Access Rights</button>
+                           <button mat-menu-item routerLink="user/menus" >Menus</button>
                           </mat-menu>
                           
 

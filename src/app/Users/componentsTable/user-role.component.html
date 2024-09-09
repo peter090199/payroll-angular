@@ -13,7 +13,7 @@
     
     <div class="container-fixed">
       <!-- <mat-progress-spinner *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner> -->
-      <mat-table [dataSource]="user" class="mat-elevation-z4">
+      <mat-table [dataSource]="listData" class="mat-elevation-z4">
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
           <mat-cell *matCellDef="let user">{{ user.id }}</mat-cell>

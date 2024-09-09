@@ -6,7 +6,7 @@ import { UsersRoleService } from 'src/app/services/users-role.service';// Make s
 import { Users } from 'src/app/Model/Users';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificationsService } from 'src/app/Global/notifications.service';
-
+import { AccessrightsService } from 'src/app/services/accessrights.service';
 @Component({
   selector: 'app-users-ui-role',
   templateUrl: './users-ui-role.component.html',
@@ -29,8 +29,8 @@ export class UsersUIRoleComponent implements OnInit {
 
 });
 
-  roles: string[] = ['admin', 'user']; // Example roles
-
+ roles: string[] = ['admin', 'user']; // Example roles
+  //roles: string[] =  ;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   
@@ -40,16 +40,25 @@ export class UsersUIRoleComponent implements OnInit {
     private dialog            : MatDialog,
     private dialogRef         : MatDialogRef<UsersUIRoleComponent>,
     private notificationService :NotificationsService,
-
+    private accessService : AccessrightsService
   ) {}
 
+  // loadAccess(){
+    
+  //  var access = this.accessService.getAccessRights();
+  //   this.roles = access;
+  // }
   ngOnInit(): void {
-    if (this.data) {
       if(this.data.id){
         this.btnSave = "Update";
         this.GetItemFormData();
       }
-    }
+    //   else
+    //   {
+    //      this.accessService.getAccessRights().subscribe(role=>{
+    //       this.roles.data = role;
+    //      });
+    //  }
   }
 
   loadUsers(): void {
@@ -78,8 +87,8 @@ export class UsersUIRoleComponent implements OnInit {
         this.userService.postEmployee(userData).subscribe({
           next: () => {
             this.notificationService.popupSwalMixin("Successfully Saved.");
-            this.ResetForm();
             this.loading = false;
+            this.ResetForm();
           },
           error: () => {
             this.notificationService.toastrError("Error Data");

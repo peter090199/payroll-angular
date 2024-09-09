@@ -24,12 +24,18 @@ export class AccessrightsService {
     );
   }
    
+  getAccessRights(): Observable<any> {
+    return this.http.get<any>(_url+"UserAccessrights/GetAccessRights");
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); 
       return of(result as T);
     };
   }
- 
+  deleteEmployee(id: number): Observable<void> {
+    return this.http.delete<void>(`${_url}UserAccessrights/DeleteAccess/${id}`);
+  }
   
 }

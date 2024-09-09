@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AccessrightsComponent } from './accessrights.component';
+import { MenusTableComponent } from './menus-table.component';
 
-describe('AccessrightsComponent', () => {
-  let component: AccessrightsComponent;
-  let fixture: ComponentFixture<AccessrightsComponent>;
+describe('MenusTableComponent', () => {
+  let component: MenusTableComponent;
+  let fixture: ComponentFixture<MenusTableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccessrightsComponent ]
+      declarations: [ MenusTableComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AccessrightsComponent);
+    fixture = TestBed.createComponent(MenusTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

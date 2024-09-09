@@ -15,22 +15,33 @@
                     </button>
               </mat-form-field>
               <button mat-raised-button color="primary" type="submit" [disabled]="!accessRightForm.valid"><mat-icon>add_circle</mat-icon> Save</button>
-              <button type="button" mat-raised-button color="warn" (click)="deleteAccessRight()">Delete</button>
+              <!-- <button type="button" mat-raised-button color="warn" (click)="deleteAccessRight()">Delete</button> -->
           </div>
         </form>
-      <mat-table mat-table [dataSource]="dataSource1" class="mat-elevation-z4">
-        <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
-        </ng-container>
+      <mat-table mat-table [dataSource]="accessRightsTable" matSort class="mat-elevation-z4">
+        <!-- <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef >ID</mat-header-cell>
+          <mat-cell *matCellDef="let element" >{{ element.id }}</mat-cell>
+        </ng-container>-->
 
         <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+          <mat-header-cell *matHeaderCellDef  mat-sort-header>AccessRight</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.accessRightName }}</mat-cell>
+        </ng-container> 
+        <!-- <ng-container *ngFor="let dc of displayedColumns" [matColumnDef]="dc" sticky >
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{dc}}</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element[dc]}}</mat-cell>
+      </ng-container> -->
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Actions</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-icon-button color="warn" (click)="deleteAccessRights(element)"><mat-icon>delete</mat-icon></button>
+          </mat-cell>
         </ng-container>
-        
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        <mat-header-row *matHeaderRowDef="mergeColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: mergeColumns;"></mat-row>
 
         <ng-container matColumnDef="loading">
           <mat-footer-cell *matFooterCellDef colspan="6">
@@ -43,7 +54,7 @@
         </mat-footer-cell>
        </ng-container>
        <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
-       <!-- <mat-footer-row *matFooterRowDef="['noData']"  [ngClass]="{'hide': accessrights.length > 0}"></mat-footer-row> -->
+       <mat-footer-row *matFooterRowDef="['noData']"  [ngClass]="{'hide': accessUser.length > 0}"></mat-footer-row>
     
      </mat-table>
      <mat-paginator class="mat-paginator-sticky" [pageSize]="10" [pageSizeOptions]="pageSizeOptions1" showFirstLastButtons> </mat-paginator>
@@ -54,7 +65,7 @@
     <div class="table-container">
       <div class="search-div">
         <mat-form-field class="w-20" floatLabel="never" appearance="standard">
-          <input matInput autocomplete="false">
+          <input matInput autocomplete="false" placeholder="Enter Menu" >
           <button mat-button matSuffix mat-icon-button aria-label="Clear">
             <mat-icon>close</mat-icon>
           </button>
@@ -100,7 +111,7 @@
     <div class="table-container">
       <div class="search-div">
         <mat-form-field class="w-40" floatLabel="never" appearance="standard">
-          <input matInput autocomplete="false">
+          <input matInput autocomplete="false" placeholder="Enter Sub-Menu">
           <button mat-button matSuffix mat-icon-button aria-label="Clear">
             <mat-icon>close</mat-icon>
           </button>

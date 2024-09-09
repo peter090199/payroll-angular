@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { UsersRoleService } from 'src/app/services/users-role.service';
-import { UsersUIRoleComponent } from '../../componentsUI/users-ui-role/users-ui-role.component';
+import { UsersUIRoleComponent } from '../componentsUI/users-ui-role.component';
 import { firstValueFrom } from 'rxjs';
 import { NotificationsService } from 'src/app/Global/notifications.service';
 
@@ -15,7 +15,7 @@ import { NotificationsService } from 'src/app/Global/notifications.service';
 })
 export class UserRoleComponent implements OnInit {
   displayedColumns: string[] = ['id', 'userName', 'role', 'actions'];
-  user = new MatTableDataSource<any>([]);
+  listData = new MatTableDataSource<any>([]);
   isLoading = true;
   placeHolder       : string = "Search";
   searchKey         : string = "";
@@ -35,7 +35,7 @@ export class UserRoleComponent implements OnInit {
   }
 
   applyFilter(){
-    this.user.filter = this.searchKey.trim().toLocaleLowerCase();
+    this.listData.filter = this.searchKey.trim().toLocaleLowerCase();
   }
   clearSearch(){
     this.searchKey = "";
@@ -53,15 +53,17 @@ export class UserRoleComponent implements OnInit {
         this.loadUsers(); // Refresh the table after dialog closure
       }
     });
+
+    
   }
   
   async loadUsers(): Promise<void> {
     try {
       this.isLoading = true;
       this.users = await firstValueFrom(this.usersService.getUsers());
-      this.user.data = this.users;
-      this.user.paginator = this.paginator;
-      this.user.sort = this.sort;
+      this.listData.data = this.users;
+      this.listData.paginator = this.paginator;
+      this.listData.sort = this.sort;
       this.isLoading = false;
   
     } catch (error) {
