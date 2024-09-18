@@ -28,6 +28,7 @@ import { AccessrightsComponent } from './Users/componentsTable/accessrights.comp
 import { MenusTableComponent } from './Users/componentsTable/menus-table.component';
 import { MenusUIComponent } from './Users/componentsUI/menus-ui.component';
 import { SubModulesUIComponent } from './Users/componentsUI/sub-modules-ui.component';
+import { AddMenuUIComponent } from './Users/componentsUI/add-menu-ui/add-menu-ui.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { SubModulesUIComponent } from './Users/componentsUI/sub-modules-ui.compo
     MenusTableComponent,
     MenusUIComponent,
     SubModulesUIComponent,
+    AddMenuUIComponent,
   ],
   imports: [
     BrowserModule,

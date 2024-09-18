@@ -35,17 +35,13 @@ export class SubModulesService {
       catchError(this.handleError<any>('GetSubModuleByID')) // Handle errors
     );
   }
+  
+  GetSubModules(): Observable<any> {
+  return this.http.get<any>(_url+"SubModules/GetSubModules").pipe(
+    catchError(this.handleError<void>('SubModules/GetSubModules'))
+  );
+}
 
-  // GetSubModuleByID(submoduleName: string, moduleId: number): Observable<any> {
-  //   const url = `${_url}SubModules/GetSubModuleById`;
-  //   const params = {
-  //     submoduleName: submoduleName,
-  //     moduleId: moduleId.toString()
-  //   };
-  //   return this.http.get<any>(url, { params }).pipe(
-  //     catchError(this.handleError<any>('GetSubModuleByID')) // Handle errors
-  //   );
-  // }
   
 private handleError<T>(_operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {

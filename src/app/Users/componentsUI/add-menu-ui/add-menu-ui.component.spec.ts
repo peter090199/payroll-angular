@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AccessrightsComponent } from './accessrights.component';
+import { AddMenuUIComponent } from './add-menu-ui.component';
 
-describe('AccessrightsComponent', () => {
-  let component: AccessrightsComponent;
-  let fixture: ComponentFixture<AccessrightsComponent>;
+describe('AddMenuUIComponent', () => {
+  let component: AddMenuUIComponent;
+  let fixture: ComponentFixture<AddMenuUIComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccessrightsComponent ]
+      declarations: [ AddMenuUIComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AccessrightsComponent);
+    fixture = TestBed.createComponent(AddMenuUIComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

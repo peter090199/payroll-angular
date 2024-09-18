@@ -29,8 +29,8 @@ export class UsersUIRoleComponent implements OnInit {
 
 });
 
- roles: string[] = ['admin', 'user']; // Example roles
-  //roles: string[] =  ;
+ roles: string[] = []; // get roles
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   
@@ -41,26 +41,31 @@ export class UsersUIRoleComponent implements OnInit {
     private dialogRef         : MatDialogRef<UsersUIRoleComponent>,
     private notificationService :NotificationsService,
     private accessService : AccessrightsService
-  ) {}
+  ) { 
+      this.loadAccess();
+    }
 
-  // loadAccess(){
-    
-  //  var access = this.accessService.getAccessRights();
-  //   this.roles = access;
-  // }
-  ngOnInit(): void {
-      if(this.data.id){
-        this.btnSave = "Update";
-        this.GetItemFormData();
+
+  loadAccess() {
+    this.accessService.getAccessRights().subscribe(
+      (data: any[]) => {
+        this.roles = data.map((role) => role.accessRightName); // Map accessRightName to the roles array
+      },
+      (error) => {
+        console.error('Error fetching roles:', error);
       }
-    //   else
-    //   {
-    //      this.accessService.getAccessRights().subscribe(role=>{
-    //       this.roles.data = role;
-    //      });
-    //  }
+    );
   }
-
+  
+  
+  ngOnInit(): void {
+    if (this.data && this.data.id) {
+      this.btnSave = "Update";
+      this.GetItemFormData();
+    }
+   
+  }
+  
   loadUsers(): void {
     this.loading = true;
     this.userService.getUsers().subscribe(users => {

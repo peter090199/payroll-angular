@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
 import { NotificationsService } from '../Global/notifications.service';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,10 @@ import { NotificationsService } from '../Global/notifications.service';
 export class LoginComponent implements OnInit{
 
   ngOnInit(): void {
-   // this.initializeForm();
+    // const user = this.users.getUsers();
+    // console.log(this.users);
   }
+
   
   // private initializeForm(): void {
   //   this.loginForm = this.fb.group({
@@ -27,22 +30,37 @@ export class LoginComponent implements OnInit{
   hidePassword: any;
 
   constructor(private fb: FormBuilder, private router: Router,private loginService: LoginService,
-    private notificationService:NotificationsService
+    private notificationService:NotificationsService,private sharedService: SharedService
   ) { 
     this.loginForm = this.fb.group({
       UserName: ['', [Validators.required]],
       Password: ['', [Validators.required, Validators.minLength(6)]]
     });
 
-  }
-
+  } 
+  user:any;
   onSubmit() 
   {
+   
     const { UserName, Password } = this.loginForm.value;
     this.loginService.login(UserName, Password).subscribe({
-      next:() => {
-        this.notificationService.popupSwalMixin("Successfuly Login.");
+      next:(response) => {
+      
+        const userRole = response.role; 
+        console.log(userRole)
+      this.sharedService.setUsername(UserName);
+      this.sharedService.setUserRole(userRole); // Save role
+      this.notificationService.popupSwalMixin("Successfully Logged In.");
+      // // Role-based navigation
+      if (userRole === 'admin') {
         this.router.navigate(['/header/dashboard']);
+      } 
+      else if (userRole === 'user' || userRole === 'staff') {
+        this.router.navigate(['/header/']);
+      } 
+      //else {
+      //   this.router.navigate(['/header']); // Default dashboard
+      // }
       },
       error: (err) => {
         if (err.status === 401) {
@@ -51,6 +69,7 @@ export class LoginComponent implements OnInit{
         } else {
           this.notificationService.toastrError(err.error.message);
         }
+
       }
     });
   }

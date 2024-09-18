@@ -38,7 +38,7 @@ updateModule(moduledata: any, id: number): Observable<void> {
     );
 }
 
-getUsers(): Observable<any> {
+getModules(): Observable<any> {
   return this.http.get<any>(_url+"Modules/GetModules").pipe(
     catchError(this.handleError<void>('Modules/GetModules'))
   );

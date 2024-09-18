@@ -7,6 +7,13 @@ import { _url } from 'src/global-variables';
   providedIn: 'root'
 })
 export class AccessrightsService {
+  getModulesByAccessRight(accessRightId: number): Observable<any> {
+    return this.http.get<any>(`${_url}AccessRightSubModules/GetSubModulesByAccessRight/${accessRightId}`);
+  }
+
+  getSubModulesByAccessRight(accessRightId: number): Observable<any> {
+    return this.http.get<any>(`${_url}AccessRightSubModules/GetSubModulesByAccessRight/${accessRightId}`);
+  }
 
   constructor( private http: HttpClient,) { }
 

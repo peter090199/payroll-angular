@@ -50,7 +50,7 @@ export class MenusTableComponent implements OnInit {
     async loadModule(): Promise<void> {
     try {
       this.isLoading = true;
-      this.modules = await firstValueFrom(this.menusService.getUsers());
+      this.modules = await firstValueFrom(this.menusService.getModules());
       this.listData.data = this.modules;
       this.listData.paginator = this.paginator;
       this.listData.sort = this.sort;
@@ -149,7 +149,7 @@ export class MenusTableComponent implements OnInit {
    
       onRowClick(row: any) {
         this.selectedRow = row;  // Mark the clicked row as selected
-         console.log('Row clicked:', row);  
+         //console.log('Row clicked:', row);  
         // Perform any additional actions on row click
       }
 

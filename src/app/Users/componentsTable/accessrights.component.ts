@@ -7,6 +7,9 @@ import { AccessrightsService } from 'src/app/services/accessrights.service';
 import { firstValueFrom } from 'rxjs';
 import { MatSort } from '@angular/material/sort';
 import { NotificationsService } from 'src/app/Global/notifications.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AddMenuUIComponent } from '../componentsUI/add-menu-ui/add-menu-ui.component';
+import { MenusService } from 'src/app/services/menus.service';
 
 @Component({
   selector: 'app-accessrights',
@@ -15,6 +18,8 @@ import { NotificationsService } from 'src/app/Global/notifications.service';
 })
 
 export class AccessrightsComponent implements OnInit {
+
+
   @ViewChild(MatPaginator) paginator1!: MatPaginator;
   @ViewChild(MatPaginator) paginator2!: MatPaginator;
   @ViewChild(MatPaginator) paginator3!: MatPaginator;
@@ -30,13 +35,23 @@ export class AccessrightsComponent implements OnInit {
   displayedColumns: string[] = ['name'];
   
   addedColumns: string[] = [    
-    'actions',
+    'Actions',
   ];
+
+  displayedColumns2: string[] = ['moduleName', 'application','recordStatus'];
+  addedColumns2: string[] = [    
+    'Actions',
+  ];
+
  mergeColumns: any = this.displayedColumns.concat(this.addedColumns);
+ mergeColumns2: any = this.displayedColumns2.concat(this.addedColumns2);
 
   isLoading :boolean = true;
+  searchKey         : string = "";
+  
   accessUser: any=[];
   accessRightsTable = new MatTableDataSource<any>([]);
+  accessRightsTable2 = new MatTableDataSource<any>([]);
 
   accessRightForm = new FormGroup({
     id                : new FormControl(0),
@@ -44,12 +59,11 @@ export class AccessrightsComponent implements OnInit {
     recordStatus      : new FormControl('Active')
 });
 
-  constructor(private fb: FormBuilder,private accessService:AccessrightsService,private alert:NotificationsService) { }
+  constructor(private fb: FormBuilder,private accessService:AccessrightsService,private alert:NotificationsService,
+    private dialog : MatDialog,private menusService:MenusService
+  ) { }
 
   ngOnInit(): void {
-    this.accessRightForm = this.fb.group({
-      accessRightName: ['', Validators.required]
-    });
     this.loadAccessRights();
 
   }
@@ -80,9 +94,8 @@ export class AccessrightsComponent implements OnInit {
       const accessName = this.accessRightForm.getRawValue();
       this.accessService.saveUserAccess(accessName).subscribe({
         next: () => {
-          console.log('Access right saved:', accessName);
           this.isLoading = false;
-          this.accessRightForm.reset();
+          this.clearText();
           this.loadAccessRights();
         },
         error: (error) => {
@@ -131,9 +144,43 @@ export class AccessrightsComponent implements OnInit {
    }
   }
 
+  data:any=[];
+  clickMenu(): void {
+    
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '400px';
+    const dialogRef = this.dialog.open(AddMenuUIComponent, dialogConfig,
+    );
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+       // this.loadModule(); // Refresh the table after dialog closure
+      }
+    });
+
+    
+  }
+  async loadModule(): Promise<void> {
+    try {
+      this.isLoading = true;
+      this.accessUser = await firstValueFrom(this.menusService.getModules());
+      this.accessRightsTable.data = this.accessUser;
+      this.accessRightsTable.paginator = this.paginator2;
+      this.accessRightsTable.sort = this.sort;
+      this.isLoading = false;
+  
+    } catch (error) {
+      console.error('Error fetching module data:', error);
+      this.isLoading = false;
+    }
+  }
 
   clearText() {
-    this.accessRightForm.reset(); // Clears the input field
+    this.accessRightForm.controls['accessRightName'].setValue('');
+  }
+  applyFilter(){
+    this.accessRightsTable.filter = this.searchKey.trim().toLocaleLowerCase();
   }
 }
 

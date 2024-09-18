@@ -1,112 +1,84 @@
-<!-- <div *ngIf="isLoading" class="loading-spinner">
-    <mat-progress-spinner mode="indeterminate" color="primary" diameter="50"></mat-progress-spinner>
-  </div>
-   -->
-  <mat-sidenav-container class="example-container">
-    <mat-sidenav #sidenav mode="over" [opened]="isMobile$ | async">
-      <mat-nav-list class="sidebar">
-        <a mat-list-item  routerLink="dashboard" routerLinkActive="active">  <i class="fas fa-home"></i>Dashboard</a>
-
-       <a mat-list-item [matMenuTriggerFor]="menu1"><i class="fas fa-file"></i>Files</a>
-        <mat-menu #menu1="matMenu">
-          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="files/employees" routerLinkActive="active">Employees</button>
-          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="files/clients" routerLinkActive="active">Clients</button>
-          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="files/branches" routerLinkActive="active">Branches</button>
-        </mat-menu>
-
-        <a mat-list-item [matMenuTriggerFor]="menu2"><i class="fa-solid fa-clipboard-user"></i>Attendance</a>
-        <mat-menu #menu2="matMenu">
-          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="attendance/cutofftimecards" routerLinkActive="active">CutOff Timecards</button>
-        </mat-menu>
-
-        <a mat-list-item [matMenuTriggerFor]="menu3"><i class="fa-solid fa-p"></i>Payroll</a>
-        <mat-menu #menu3="matMenu">
-          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="payroll/generatepayroll" routerLinkActive="active">Generate Payroll</button>
-        </mat-menu>
-
-        <a mat-list-item [matMenuTriggerFor]="menu5"><i class="fa-solid fa-clipboard-user"></i>User Role</a>
-        <mat-menu #menu5="matMenu">
-          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="user/role">Users</button>
-          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="user/accessrights" >Access Rights</button>
-          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="user/menus" >Menus</button>
-        </mat-menu>
-
-        <a mat-list-item [matMenuTriggerFor]="menu4"><i class="fa-solid fa-clipboard-user"></i>User</a>
-        <mat-menu #menu4="matMenu">
-          <button mat-menu-item (click)="onNavItemClick(sidenav)" routerLink="user/profile">Profile</button>
-          <button mat-menu-item (click)="onNavItemClick(sidenav)" (click)="logout()">Logout</button>
-        </mat-menu>
-
-     
-      </mat-nav-list>
-    </mat-sidenav>
-    
-    <mat-sidenav-content>
-      <mat-toolbar>
-        <nav class="navbar navbar-expand-sm  navbar-dark fixed-top">
-          <div class="container-fluid">
-          
-                <span></span>
-                <span class="example-spacer"></span>
-                <div class="example-button-row">
-                    <nav *ngIf="!(isMobile$ | async)"  class="nav-link">
-                        <ul class="nav-list">
-                        <button mat-button  routerLink="dashboard" routerLinkActive="active">Dashboard</button>
+<mat-toolbar class="nav-toolbar custom-toolbar">
+  <nav class="navbar navbar-expand">
+      <div class="container-fixed">
+              <button
+              class="toggleButton"
+              type="button"
+              aria-label="Toggle sidenav"
+              mat-icon-button
+              (click)="drawer.toggle()">
+              <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          </button>
+          <ul class="navbar-nav navMenus">
+            <li *ngFor="let module of Modules" class="nav-item">
+              <a 
+                  [ngClass]="{'active-link': getPath(module.moduleName.toLowerCase()) == true}" 
+                  type="button" 
+                  [matMenuTriggerFor]="menu" 
+                  id="navbarDropdownMenuLink"
+                  >
+                  {{module.moduleName}}
+              </a>
+              <mat-menu #menu="matMenu" >
+                  <div *ngFor="let submodule of SubModules" >
+                      <button 
+                          *ngIf="module.id == submodule.moduleId" 
+                          routerLink="{{submodule.route.toLowerCase()}}"  
+                          mat-menu-item 
+                          >
+                          {{submodule.subModuleName}}
                          
-                        <button mat-button [matMenuTriggerFor]="menu1">Files</button>
-                          <mat-menu #menu1="matMenu">
-                            <button mat-menu-item routerLink="files/employees" routerLinkActive="active">Employees</button>
-                            <button mat-menu-item routerLink="files/clients" routerLinkActive="active">Clients</button>
-                            <button mat-menu-item routerLink="files/branches" routerLinkActive="active">Branches</button>
-                          </mat-menu>
+                      </button>
+                      
+                  </div>
+              </mat-menu> 
+            
+            
 
-                          <button mat-button [matMenuTriggerFor]="menu2">Attendance</button>
-                          <mat-menu #menu2="matMenu">
-                            <button mat-menu-item routerLink="attendance/cutofftimecards" routerLinkActive="active">CutOff Timecards</button>
-                          </mat-menu>
+              </li>
+          </ul>
+      </div>
+    
+  </nav>
+    <span class="material-symbols-outlined" (click)="onNavItemClick(sidenav)" (click)="logout()" style="margin: 12px;">
+    move_item
+    </span>
+    
+</mat-toolbar>
 
-                          <button mat-button [matMenuTriggerFor]="menu3">Payroll</button>
-                          <mat-menu #menu3="matMenu">
-                            <button mat-menu-item>Generate Payroll</button>
-                            <button mat-menu-item>Payroll Batches</button>
-                            <button mat-menu-item>Payslip Records</button>
-                          </mat-menu>
-                          
-                          <button mat-button [matMenuTriggerFor]="menu4">Users</button>
-                          <mat-menu #menu4="matMenu">
-                           <button mat-menu-item routerLink="user/role" routerLinkActive="active">User Role</button>
-                           <button mat-menu-item routerLink="user/accessrights" >Access Rights</button>
-                           <button mat-menu-item routerLink="user/menus" >Menus</button>
-                          </mat-menu>
-                          
+<mat-toolbar class="business-cont mat-elevation-z3">
+  <span class="business-name" >{{systemTitle}} </span>
+  
+</mat-toolbar>
+<mat-sidenav-container>
+<mat-sidenav #drawer>
+  <mat-toolbar>Menu</mat-toolbar>
 
-                          <button mat-button [matMenuTriggerFor]="menu5">
-                            <mat-icon class="custom-icon" aria-hidden="false" aria-label="Example user icon">person</mat-icon>
-                          </button>
-                          <mat-menu #menu5="matMenu">
-                            <button mat-menu-item routerLink="userprofileui" >Profile</button>
-                            <button mat-menu-item (click)="logout()">Log out</button>
-                          </mat-menu>
-                        </ul>
-                      </nav>
-                  <!-- <button  *ngIf="!(isMobile$ | async)"  class="nav-link"  mat-button [routerLink]="['/home']">Home</button>
-                  <button  *ngIf="!(isMobile$ | async)" class="nav-link"  mat-button [routerLink]="['/about']">About</button>
-                  <button  *ngIf="!(isMobile$ | async)" class="nav-link"  mat-button [routerLink]="['/skills']">Skills</button>
-                  <button  *ngIf="!(isMobile$ | async)" class="nav-link"  mat-button [routerLink]="['/education']">Education</button>
-                  <button  *ngIf="!(isMobile$ | async)" class="nav-link"  mat-button [routerLink]="['/work']" >Work</button> -->
-                </div>
-                <button mat-icon-button class="toggle-button" (click)="sidenav.toggle()">
-                    <mat-icon class="menu-icon" *ngIf="!(sidenav.opened)">menu</mat-icon>
-                    <mat-icon class="close-icon" *ngIf="sidenav.opened">close</mat-icon>
-                </button>
-            </div>
-        </nav>
-      </mat-toolbar>
-      
-      <router-outlet></router-outlet>
-      <!-- <mat-divider></mat-divider> -->
-      <!-- <app-footer-page></app-footer-page> -->
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+  <mat-divider></mat-divider>
+  <mat-nav-list *ngFor="let module of Modules">
+      <a mat-list-item [matMenuTriggerFor]="menu">{{module.moduleName}}</a>
+      <mat-menu #menu="matMenu">
+          <div *ngFor="let submodule of SubModules">
+              <button *ngIf="module.id == submodule.moduleId" 
+                  routerLink="{{submodule.route.toLowerCase()}}"
+                  mat-menu-item
+                  >
+                  {{submodule.subModuleName}}
+                
+              </button>
+             
+          </div>
+          
+      </mat-menu>
+     
+  </mat-nav-list> 
 
+ <button mat-menu-item (click)="onNavItemClick(sidenav)" (click)="logout()">Logout</button>
+</mat-sidenav>
+<mat-sidenav-content class="content">
+  <router-outlet></router-outlet>
  
+</mat-sidenav-content>
+</mat-sidenav-container>
+<app-footer-page></app-footer-page>
+<!-- Toolbar Section -->

@@ -25,7 +25,15 @@ export class RegisterService {
     );
     
   }
+
+  getUserByUsername(userName: string): Observable<any> {
+    const url = `${_url}Auth/GetUserByName/${userName}`;
+    return this.http.get<any>(url);
+  }
   
+  getUsers(): Observable<any> {
+    return this.http.get<any>(_url+"Auth/GetUsers");
+  }
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); 

@@ -1,223 +1,141 @@
 
-.example-container {
-    flex-direction: column;
-  }
-  .nav-list a:hover {
-    background-color:white;
-  }
 
-  nav{
-    background-color: lightcoral;
-    padding: 4px;
-    padding-bottom: 1px;
-  }
- button{
-    font-size: 15px;
+.custom-toolbar .mat-toolbar-row {
+  height: 100px !important; /* Ensure the height is applied correctly */
+}
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.spacer {
+  flex: 1 1 auto;
+}
 
- } 
- button:hover{
-  background-color: whitesmoke;
- }
+.acct-icon {
+  color: #3f51b5;
+}
 
-  mat-sidenav-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    
-  }
-  .example-spacer {
-    flex: 1 1 auto;
-   
-  }
-  
-  mat-toolbar {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    
-  }
-  
-  router-outlet {
-    flex: 1;
-  }
-  
-  .sidebar {
-    height: 100vh; /* Full viewport height */
-    overflow-y: auto; /* Enable vertical scrolling */
-    width: 250px; /* Adjust width as needed */
-    border-right: 1px solid #817e7e; /* Optional border for visual separation */
-  }
-   .sidebar::-webkit-scrollbar {
-    width: 8px; /* Width of the scrollbar */
-  }
-  .sidebar::-webkit-scrollbar-thumb {
-    background-color: #888; /* Color of the scrollbar thumb */
-    border-radius: 4px; /* Rounded corners for the scrollbar thumb */
-  }
-  
-  .sidebar::-webkit-scrollbar-thumb:hover {
-    background-color: #555; /* Darker color when hovering */
-  }
-  
-  .sidebar a:hover {
-    color:blue;
-  
-  }
-  .sidebar:hover ~ .content {
-    margin-left: 260px; /* Adjust margin to match sidebar width on hover */
-  }
-  
-  @media (max-width: 768px) {
-    .sidebar {
-      width: 300px; /* Adjust the width for smaller screens */
-    }
-   
-  .menu-icon, .close-icon {
-    transition: opacity 0.3s ease;
-  }
-    
-  /* Base styles for the menu icon */
-  .menu-icon {
-    font-size: 24px; /* Adjust size as needed */
-    color: black;
-    transition: opacity 0.3s ease; /* Smooth transition effect */
-  }
-  
-  /* Base styles for the close icon */
-  .close-icon {
-    font-size: 24px; /* Adjust size as needed */
-    color: black;
-    transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition effects */
+.business-name {
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+  color: #303f9f;
+}
+.navbar-nav {
+  position: relative;
+  padding: 2px;
+  list-style-type: none;
+  cursor: pointer;
  
-  }
-    
-  }
-
-  
-  
-/* Ensure the toggle button is positioned correctly */
-.toggle-button {
-    position: relative;
-    top: 0;
-    left: 0;
-    margin-left: 16px; /* Adjust as needed */
-    z-index: 10; /* Ensure it is above other content */
-    transition: transform 0.3s ease; /* Smooth transition effect */
-  }
-
-  
-  /* When sidenav is opened, slide out the menu icon */
-  .mat-sidenav-opened ~ .toggle-button .menu-icon {
-    transform: translateX(-100%); /* Hide the menu icon */
-    opacity: 0; /* Hide the icon */
-  }
-  
-  /* When sidenav is closed, slide out the close icon */
-  .mat-sidenav-opened ~ .toggle-button .close-icon {
-    transform: translateX(0); /* Show the close icon */
-    opacity: 1; /* Show the icon */
-   
-  }
-  
-  /* When sidenav is closed, slide out the close icon */
-  .mat-sidenav ~ .toggle-button .menu-icon {
-    transform: translateX(0); /* Show the menu icon */
-    opacity: 1; /* Show the icon */
-  }
-  
-  /* When sidenav is closed, slide out the close icon */
-  .mat-sidenav ~ .toggle-button .close-icon {
-    transform: translateX(100%); /* Hide the close icon */
-    opacity: 0; /* Hide the icon */
-  }
-  
-  
-  .toggle-button .mat-icon {
-    transition: opacity 0.3s ease;
-  }
-  
-  .toggle-button .menu-icon.ng-hide {
-    opacity: 0;
-  }
-  
-  .toggle-button .close-icon.ng-show {
-    opacity: 1;
-  }
-  
-  @media (min-width: 768px) {
-    .toggle-button {
-      display: none;
-    }
-  }
-  
-  .loading-spinner {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000; /* Make sure it appears above other content */
-    background-color:gray;
-    border-radius: 8px; /* Optional: Rounded corners */
-    padding: 100%; /* Optional: Add padding around the spinner */
-
-  }
-/* Styling for mat-list-item */
-a[mat-list-item] {
-  padding: 8px 16px; /* Adjust padding as needed */
-  border-radius: 4px; /* Optional border radius for rounded corners */
-  font-size: 14px; /* Adjust font size */
-  display: flex; /* Align items horizontally */
-  align-items: center; /* Center items vertically */
-  text-decoration: none; /* Remove underline from links */
-  color: #333; /* Text color */
-  background-color: white;
-  transition: background-color 0.3s, color 0.3s; /* Smooth transitions for hover effect */
+}
+.navbar-nav li a {
+  text-decoration: none;
+  color: inherit; /* Keep original color */
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+}
+/* Hover effect */
+.navbar-nav li a:hover {
+  background-color: #f7e2f2dc; /* Change this to your desired hover background color */
+  color: #2b3cd8; /* Optional: change text color on hover */
+}
+.nav-item {
+  display: inline-block;
+}
+mat-sidenav-container {
+  height: 100%;
+  background-color: transparent !important;
 }
 
-a[mat-list-item]:hover {
-  background-color: #e0e0e0; /* Hover background color */
-  color: #000; /* Hover text color */
+mat-sidenav {
+  width: 350px;
 }
 
-/* Icon styling inside mat-list-item */
-a[mat-list-item] i {
-  margin-right: 8px; /* Space between icon and text */
-  font-size: 16px; /* Icon size */
+.navbar {
+  width: 100% !important;
+  display: flex;
+  flex-grow: 1;
+}
+ .arrow-drop-down{
+  position: relative;
+  top: 7px;
+  left: -10px;
+  margin-left: 10px;
+  color: #000000A6;
 }
 
-/* Styling for mat-menu items */
-a[mat-menu-item] {
-  padding: 8px 16px; /* Adjust padding as needed */
-  font-size: 14px; /* Adjust font size */
-  text-decoration: none; /* Remove underline from links */
-  color: #333; /* Text color */
-  background-color: #fff; /* Background color */
-  border-radius: 4px; /* Optional border radius for rounded corners */
-  transition: background-color 0.3s, color 0.3s; /* Smooth transitions for hover effect */
+.nav-toolbar {
+  padding: 0 !important;
+  font-size: 15px    !important;
+  font-weight: 400 !important;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3f51b5;
+  color: white;
+
 }
-
-
-a[mat-menu-item]:hover {
-  background-color: #f0f0f0; /* Hover background color */
-  color: #000; /* Hover text color */
+.business-cont{
+  width: 100%;
 }
-
-
-
-/* Hover effect for mat-menu-item buttons */
-button[mat-menu-item]:hover {
-  background-color: #f0f0f0; /* Background color on hover */
-  color: #000000; /* Text color on hover */
+.nav-toolrow{
+  padding: 0 !important;
 }
-
-/* Styling for the icon within mat-menu-item */
-button[mat-menu-item] i {
-  margin-right: 2px; /* Space between icon and text */
-  font-size: 16px; /* Adjust icon size */
+.toggleButton {
+  display: none;
 }
+@media only screen and (max-width: 958px) {
+  .toggleButton {
+      display: inline;
+  }
 
+  .navMenus {
+      display: none !important;
+      display: flex;
+      justify-content: flex-end;
+      list-style: none;
+      flex-grow: 1;
+      margin-right: 20px;
+  }
 
+  button.mat-menu-item {
+      width: 350px !important;
+  }
+  .content{
+    height: 100%;
+  }
+}
+.navbar-nav {
+  margin: 0 !important;; /* Pushes the items to the right */
+  width: 100% !important;
   
-  
-  
+}
+
+.nav-item a{
+  margin-left: 0%;
+  justify-content: flex-end;
+}
+
+.custom-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e42740;
+  color: white;
+  height: 50px !important;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+}
+
+.right-section {
+  display: flex;
+  justify-content: flex-end; /* Ensures items align to the right */
+  align-items: center;
+  flex-grow: 1; /* Pushes this section to take up remaining space */
+}
+
