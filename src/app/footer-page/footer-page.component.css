@@ -2,24 +2,23 @@
 .footer {
     background-color:white;
     padding: 10px;
-    text-align: center;
+    text-align: left;
     border-top: 1px solid #e6d2d2;
-    margin-top: 20vh;
+    margin-top: 0px;
    
   }
   
   .footer-content {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: right;
 
   }
   span {
-  
-    float: right;
+    float: left;
   }
   
   .footer-spacer {
-    flex: 1;
+    flex: 2;
   }
   

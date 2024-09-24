@@ -31,6 +31,13 @@
       overflow-x: auto;
       white-space: nowrap;
     }
+    button[mat-icon-button] {
+      padding: 6px; /* Reduce padding for smaller screens */
+    }
+  
+    button[mat-icon-button] mat-icon {
+      font-size: 20px; /* Decrease icon size */
+    }
   }
 
   /* src/app/components/employee-list/employee-list.component.css */

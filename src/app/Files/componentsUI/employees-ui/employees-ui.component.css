@@ -35,13 +35,20 @@ mat-form-field .mat-error {
   gap: 8px; /* Space between buttons */
 }
 
-button[mat-raised-button] {
-  margin-top: 16px; /* Space above the button */
+
+.button-container {
+  display: flex;
+  justify-content: flex-end; /* Aligns button to the right */
 }
 
-button[mat-stroked-button] {
-  margin-top: 16px; /* Space above the button */
+/* Optional: Customize the button itself */
+button[mat-raised-button] {
+  font-size: 14x;
+  border-radius: 4px;
+  width: 25%;
 }
+  
+
 @media (max-width: 600px) {
   .form-container {
     padding: 8px;

@@ -45,22 +45,17 @@ export class LoginComponent implements OnInit{
     const { UserName, Password } = this.loginForm.value;
     this.loginService.login(UserName, Password).subscribe({
       next:(response) => {
-      
-        const userRole = response.role; 
-        console.log(userRole)
+      const userRole = response.role; 
+      localStorage.setItem('user', JSON.stringify(userRole));
       this.sharedService.setUsername(UserName);
       this.sharedService.setUserRole(userRole); // Save role
       this.notificationService.popupSwalMixin("Successfully Logged In.");
-      // // Role-based navigation
       if (userRole === 'admin') {
         this.router.navigate(['/header/dashboard']);
       } 
-      else if (userRole === 'user' || userRole === 'staff') {
-        this.router.navigate(['/header/']);
-      } 
-      //else {
-      //   this.router.navigate(['/header']); // Default dashboard
-      // }
+      else {
+        this.router.navigate(['/header']); // Default dashboard
+      }
       },
       error: (err) => {
         if (err.status === 401) {

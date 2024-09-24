@@ -22,8 +22,8 @@ export class UsersRoleService {
     return this._refreshrequired;
   }
 
-  getUsers(): Observable<Users[]> {
-    return this.http.get<Users[]>(_url+"Auth/GetUsers");
+  getUsers(): Observable<any> {
+    return this.http.get<any>(_url+"Auth/GetUsers");
   }
 // save 
 postEmployee(userForm: any): Observable<any>{

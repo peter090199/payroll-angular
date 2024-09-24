@@ -29,6 +29,11 @@ import { MenusTableComponent } from './Users/componentsTable/menus-table.compone
 import { MenusUIComponent } from './Users/componentsUI/menus-ui.component';
 import { SubModulesUIComponent } from './Users/componentsUI/sub-modules-ui.component';
 import { AddMenuUIComponent } from './Users/componentsUI/add-menu-ui/add-menu-ui.component';
+import { LandingPageComponent } from './lay-out/landing-page/landing-page.component';
+import { UserProfileComponent } from './Profile/ComponentsTable/user-profile/user-profile.component';
+import { UserProfileUIComponent } from './Profile/ComponentsUI/user-profile-ui/user-profile-ui.component';
+import { ChangePasswordUIComponent } from './Profile/ComponentsUI/change-password-ui/change-password-ui.component';
+
 
 
 @NgModule({
@@ -51,6 +56,11 @@ import { AddMenuUIComponent } from './Users/componentsUI/add-menu-ui/add-menu-ui
     MenusUIComponent,
     SubModulesUIComponent,
     AddMenuUIComponent,
+    LandingPageComponent,
+    UserProfileComponent,
+    UserProfileUIComponent,
+    ChangePasswordUIComponent,
+  
   ],
   imports: [
     BrowserModule,

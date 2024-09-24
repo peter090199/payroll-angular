@@ -75,7 +75,7 @@ export class EmployeesUIComponent implements OnInit {
     else if (this.btnSave == 'Update') 
       {
       this.empService.updateEmployee(employeeData,this.data.id).subscribe({
-        next: (res) => {
+        next: () => {
           this.notificationService.popupSwalMixin("Successfully Updated.");
           this.dialogRef.close(true); 
           this.loading = false;

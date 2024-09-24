@@ -71,6 +71,9 @@ import { ClientsComponent } from './Files/components/clients/clients.component';
 import { UserRoleComponent } from './Users/componentsTable/user-role.component';
 import { AccessrightsComponent } from './Users/componentsTable/accessrights.component';
 import { MenusTableComponent } from './Users/componentsTable/menus-table.component';
+import { LandingPageComponent } from './lay-out/landing-page/landing-page.component';
+import { UserProfileUIComponent } from './Profile/ComponentsUI/user-profile-ui/user-profile-ui.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -82,22 +85,23 @@ const routes: Routes = [
     path: 'protected', 
     component: ProtectedComponent, 
     canActivate: [AuthGuard], 
-    data: { roles: ['admin', 'user'] } 
+   // data: { roles: ['admin', 'user'] } 
   },
 
   // Routes requiring authentication
   {
     path: 'header',
-    component: HeaderPageComponent,
+    component: LandingPageComponent,
     canActivate: [AuthGuard],
    // data: { roles: ['admin'] }, // Admin access only
     children: [
-      { path: 'dashboard', component: DashboardUiComponent, data: { roles: ['admin'] } },
-      { path: 'files/employees', component: EmployeesComponent, data: { roles: ['admin'] } },
-      { path: 'files/clients', component: ClientsComponent, data: { roles: ['admin', 'user'] }}, // Admin & User access
-      { path: 'user/role', component: UserRoleComponent, data: { roles: ['admin'] } },
-      { path: 'user/accessrights', component: AccessrightsComponent, data: { roles: ['admin'] } },
-      { path: 'user/menus', component: MenusTableComponent, data: { roles: ['admin'] } },
+      { path: 'dashboard', component: DashboardUiComponent },
+      { path: 'files/employees', component: EmployeesComponent},
+      { path: 'files/clients', component: ClientsComponent }, // Admin & User access
+      { path: 'user/role', component: UserRoleComponent},
+      { path: 'user/accessrights', component: AccessrightsComponent, },
+      { path: 'user/menus', component: MenusTableComponent},
+      { path: 'user/profile', component: UserProfileUIComponent}
     ]
   },
   

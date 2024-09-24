@@ -1,78 +1,64 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { LoginService } from '../services/login.service';
-import { MenusService } from '../services/menus.service';
-import { SubModulesService } from '../services/sub-modules.service';
+import { LoginService } from 'src/app/services/login.service';
+import { MenusService } from 'src/app/services/menus.service';
+import { SubModulesService } from 'src/app/services/sub-modules.service';
 import { Router } from '@angular/router';
 import { _systemTitle } from 'src/global-variables';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { AccessrightsService } from '../services/accessrights.service';
-import { RegisterService } from '../services/register.service';
-import { SharedService } from '../shared.service';
+import { AccessrightsService } from 'src/app/services/accessrights.service';
+import { RegisterService } from 'src/app/services/register.service';
+import { SharedService } from 'src/app/shared.service';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
-  selector: 'app-header-page',
-  templateUrl: './header-page.component.html',
-  styleUrls: ['./header-page.component.css'],
-
+  selector: 'app-landing-page',
+  templateUrl: './landing-page.component.html',
+  styleUrls: ['./landing-page.component.css']
 })
-export class HeaderPageComponent implements OnInit {
+export class LandingPageComponent implements OnInit {
+  @ViewChild('drawer') drawer!: MatSidenav;
+  isMobile: boolean = window.innerWidth <= 768;
 
-  animateCards = false;
-  systemTitle : string = _systemTitle;
+  notificationCount = 5; // Example count; you can dynamically update this value
 
-  triggerAnimation() {
-    this.animateCards = !this.animateCards; // Toggle to trigger animation
+  // Method to update notification count dynamically
+  updateNotificationCount(count: number) {
+    this.notificationCount = count;
   }
-  isLoading = true; // Start with loading true
-  onNavItemClick(sidenav: MatSidenav) {
-    // sidenav.close();
-  }
-  isClicked = false;
 
-  handleClick() {
-    this.isClicked = !this.isClicked;
-    setTimeout(() => {
-      this.isClicked = false; // Reset after the transition
-    }, 300); 
-  }
-  isMobile$!: Observable<boolean>;
+  constructor(private breakpointObserver: BreakpointObserver,
+    private logoutService:LoginService,
+    private modulesService:MenusService,
+    private subModulesService:SubModulesService, 
+    public router: Router,
+    private accessRightsService:AccessrightsService,
+    private userService:RegisterService,
+    private sharedService: SharedService
 
+  ) {
+   
+  }
+
+  userRole: string = '';  // User role will be assigned here
+  userServices:any=[];
+  username: any;
+  users:string='';
+  
   accessRights: { moduleId: number; subModuleId: number; }[] = [];
   Modules : any = [];
   SubModules : any = [];
+  systemTitle : string = _systemTitle;
   
-  @ViewChild('sidenav') sidenav!: MatSidenav;
-  @ViewChild(MatSort) matSort!:MatSort;
-
-  constructor(private breakpointObserver: BreakpointObserver,private logoutService:LoginService,
-    private modulesService:MenusService,private subModulesService:SubModulesService, public router: Router,
-    private accessRightsService:AccessrightsService,private userService:RegisterService,
-    private sharedService: SharedService
-  )
-   {
-    this.isMobile$ = this.breakpointObserver.observe([Breakpoints.Handset])
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
-     this.loadData();
-   }
-
-   userRole: string = '';  // User role will be assigned here
-   //accessRightss: any=[]; // Store access rights from service
-   userServices:any=[];
-   username: any;
-   users:string='';
-
-   ngOnInit(): void {
-    // this.username = this.sharedService.getUsername();
-    // this.users = this.username;
-    // console.log('Username:', this.users);
+  ngOnInit(): void {
+    // this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
+    //   this.isMobile = result.matches;
+    // });
+    this.isMobile = window.innerWidth <= 768;
+    
     this.username = this.logoutService.getUsername();
    // console.log('Username:', this.username);
     if (this.username) {
@@ -80,9 +66,13 @@ export class HeaderPageComponent implements OnInit {
     } else {
       console.error('Username not found in token');
     }
+   
   }
-  
-
+  onModuleClick() {
+    if (this.isMobile) {
+      this.drawer.close();
+    }
+  }
   async loadUserAndModules(): Promise<void> {
     try {
       const user = await firstValueFrom(this.userService.getUserByUsername(this.username));
@@ -95,7 +85,6 @@ export class HeaderPageComponent implements OnInit {
       console.error('Error fetching user or modules:', error);
     }
   }
-
   async loadModulesAndSubModules(): Promise<void> {
     try {
       // Fetch modules and submodules
@@ -134,29 +123,6 @@ export class HeaderPageComponent implements OnInit {
     }
   }
   
-async GetModules(): Promise<void> {
-  try {
-    const allModules = await firstValueFrom(this.modulesService.getModules());
-    const allSubModules = await firstValueFrom(this.subModulesService.GetSubModules());
-    
-    // Filter modules based on access rights
-
-    this.Modules = allModules.filter((module: any) => 
-      this.accessRights.some((right: any) => right.moduleId === module.moduleId)
-  
-    );
-  
-    // Filter submodules based on access rights
-    this.SubModules = allSubModules.filter((submodule: any) => 
-      this.accessRights.some((right: any) => right.subModuleId === submodule.subModuleId)
-    );
-  } catch (error) {
-    console.error('Error fetching modules or submodules:', error);
-  }
-}
-
-
-
   getPath(module:string){
     module        =  module.replace(' ', '');
     module        =  module.replace(' ', '');
@@ -169,14 +135,6 @@ async GetModules(): Promise<void> {
     return route2 == module;
   }
 
-
-  loadData() {
-    // Simulate loading with a timeout (replace this with actual data fetching)
-    setTimeout(() => {
-      this.isLoading = false; // Set loading to false after data is fetched
-    }, 3000); // Adjust time as necessary
-  }
-  
   logout() {
     this.logoutService.logout();
   }

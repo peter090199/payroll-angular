@@ -1,3 +1,4 @@
+
 <mat-toolbar class="nav-toolbar custom-toolbar">
   <nav class="navbar navbar-expand">
       <div class="container-fixed">
@@ -52,8 +53,8 @@
 </mat-toolbar>
 <mat-sidenav-container>
 <mat-sidenav #drawer>
-  <mat-toolbar>Menu</mat-toolbar>
-
+  <!-- <mat-toolbar>Menu</mat-toolbar> -->
+ 
   <mat-divider></mat-divider>
   <mat-nav-list *ngFor="let module of Modules">
       <a mat-list-item [matMenuTriggerFor]="menu">{{module.moduleName}}</a>
@@ -76,9 +77,12 @@
  <button mat-menu-item (click)="onNavItemClick(sidenav)" (click)="logout()">Logout</button>
 </mat-sidenav>
 <mat-sidenav-content class="content">
-  <router-outlet></router-outlet>
- 
+    <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    <router-outlet></router-outlet>
+
 </mat-sidenav-content>
 </mat-sidenav-container>
-<app-footer-page></app-footer-page>
+<!-- <app-footer-page></app-footer-page> -->
 <!-- Toolbar Section -->

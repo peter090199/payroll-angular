@@ -7,7 +7,7 @@ import { catchError, tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { _url } from 'src/global-variables';
 import { jwtDecode } from 'jwt-decode';
-
+import { UsersRoleService } from './users-role.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +22,8 @@ export class LoginService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private jwtHelper: JwtHelperService
+    private jwtHelper: JwtHelperService,
+    private users:UsersRoleService
   ) {
     this.startTokenExpirationCheck(); // Start checking for token expiration on initialization
   }
@@ -32,21 +33,45 @@ export class LoginService {
     const token = this.getToken();
     return token ? !this.jwtHelper.isTokenExpired(token) : false;
   }
+ user:any;
+ userName: string="";
+ 
+userroles()
+{
+  this.user = this.users.getUsers().subscribe({next:(res)=>{
+    this.user = res;
+    console.log(this.user); 
+    console.log(this.userName); 
+  },
+  error:(err)=>{
+    console.error("Error user role:",err);
+  }
+});
 
+}
   // Login method
   login(UserName: string, Password: string): Observable<any> {
     return this.http.post<any>(_url + 'Auth/login', { UserName, Password }).pipe(
       tap(res => {
         if (res && res.token) {
           this.saveToken(res.token);
-          const user = { UserName, role: 'admin' }; 
-          localStorage.setItem('user', JSON.stringify(user));
+          this.userName = UserName; // Assume the email is returned in the response
+          localStorage.setItem('UserName', this.userName);
+        //  const user = { UserName, role: 'user' }; 
+        
+       //   if(this.userName == "")
+
+        //  localStorage.setItem('user', JSON.stringify(user));
           this._refreshrequired.next();
          // this.startTokenExpirationCheck(); // Restart token expiration check on login
         }
       }),
       catchError(this.handleLoginError())
     );
+  }
+  
+  getUserNameProfile(): string | null {
+    return this.userName || localStorage.getItem('UserName');
   }
   
   getUserRole(): string {
@@ -120,7 +145,7 @@ export class LoginService {
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        console.log('Decoded Token:', decoded); // For debugging purposes
+      //  console.log('Decoded Token:', decoded); // For debugging purposes
         return decoded;
       } catch (error) {
         console.error('Error decoding token:', error);

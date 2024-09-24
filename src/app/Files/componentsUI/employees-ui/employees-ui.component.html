@@ -24,8 +24,8 @@
                   <input matInput placeholder="Input ContactNo"  autocomplete="off" required formControlName="contactNo">
               </mat-form-field>
   </div>
-  <div mat-dialog-actions [align]="'end'" class="mb-4">
-      <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="EmployeeForm.invalid">{{btnSave}}</button>
+  <div class="button-container">
+      <button type="submit"  mat-raised-button color="primary" [disabled]="EmployeeForm.invalid">{{btnSave}}</button>
   </div>
   
 </form>

@@ -23,8 +23,8 @@
                 <input matInput type="password" autocomplete="off" formControlName="password" required>
             </mat-form-field>
       </div>
-      <div mat-dialog-actions [align]="'end'" class="mb-10" style="margin: 0px;">
-        <button type="submit" class="mt-4 me-2" mat-raised-button color="primary" [disabled]="userForm.invalid">{{btnSave}}</button>
-     </div>
-    
+      <div class="button-container">
+        <button type="submit" mat-raised-button color="primary" [disabled]="userForm.invalid">{{btnSave}}</button>
+      </div>
+      
     </form>
