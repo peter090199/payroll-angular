@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { LoginService } from 'src/app/services/login.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ChangePasswordUIComponent } from '../change-password-ui/change-password-ui.component';
+import { UserProfileService } from 'src/app/services/user-profile.service';
+import { NotificationsService } from 'src/app/Global/notifications.service';
 
 @Component({
   selector: 'app-user-profile-ui',
@@ -14,70 +16,87 @@ import { ChangePasswordUIComponent } from '../change-password-ui/change-password
 export class UserProfileUIComponent implements OnInit {
   profileForm!: FormGroup;
   profileImageUrl: string = 'assets/default-profile.png'; // Placeholder image
-  user = {
-    firstName: 'Pedro',
-    middleName: 'Lapasaran',
-    lastName: 'Yorpo Jr.',
-    jobTitle: 'Software Engineer',
-    username: 'ME181',
-    employeeNo: 'ME181',
-    birthDate: '1999-09-01',
-    contactNo: '0995-913-0750',
-    email: 'codewarrior05.mariosoft@gmail.com',
-    address: 'Cordova, Cebu City'
-  };
+  
   selectedFile: File | null = null;
   previewUrl: string | ArrayBuffer | null = null;
   getuserName: any;
   userName: string = "";
+  users: any;
 
   constructor(
     private fb: FormBuilder, private http: HttpClient,
     private authService:LoginService,
     private dialog : MatDialog,
-
+    private userProfileService:UserProfileService,
+    private alert:NotificationsService
 
   ){  
-      this.getuserName = this.authService.getUserNameProfile();
-      this.userName = this.getuserName; 
+    this.initializeForm();
    }
 
-  ngOnInit(): void {
+   initializeForm() {
+    this.userName = this.authService.getUserNameProfile() || ''; // Ensure userName is not null/undefined
     this.profileForm = this.fb.group({
-      employeeNo: [{ value: this.user.employeeNo, disabled: true }],
-      username: [this.userName, Validators.required],
-      firstName: [this.user.firstName, Validators.required],
-      middleName: [this.user.middleName, Validators.required],
-      lastName: [this.user.lastName, Validators.required],
-      birthDate: [this.user.birthDate, Validators.required],
-      contactNo: [this.user.contactNo, Validators.required],
-      email: [this.user.email, [Validators.required, Validators.email]],
-      address: [this.user.address, Validators.required],
+      username: [{ value: this.userName, disabled: true }, Validators.required],
+      firstName: ['', Validators.required],
+      middleName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      birthDate: ['', Validators.required],
+      contactNo: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      address: ['', Validators.required],
     });
   }
 
-  onSubmit() {
+  ngOnInit(): void {
+   this.loadUserProfile();
+   
+  }
+ 
+
+  loadUserProfile(): void {
+    this.userProfileService.getUserByUsername(this.userName).subscribe({
+      next: (data) => {
+        this.users = data;
+        this.profileForm.patchValue(this.users);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error fetching user data', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
+
+  loading     : boolean = false;
+  isLoading = true;
+
+  onSubmit(): void {
     if (this.profileForm.valid) {
-      this.http.put('https://your-backend-api/api/user', this.profileForm.value).subscribe(
-        (response) => {
-          console.log('Profile updated successfully');
+      const profileData = this.profileForm.getRawValue(); // Get the form data
+      this.userProfileService.updateUserProfile(profileData).subscribe({
+        next: (res) => {
+         // console.log("successfuly updated.")
+          this.alert.popupSwalMixin('User successfully updated.');
         },
-        (error) => {
-          console.error('Error updating profile:', error);
-        }
-      );
+        error: (err) => {
+          this.alert.toastrError(err.error);
+        },
+      });
     }
   }
 
-  onChangePassword() {
+  onChangePassword():void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '400px';
+    dialogConfig.data = this.users;
     const dialogRef = this.dialog.open(ChangePasswordUIComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        //this.loadEmployees(); // Refresh the table after dialog closure
+         this.loadUserProfile();
       }
     });
   }

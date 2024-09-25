@@ -21,7 +21,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class LandingPageComponent implements OnInit {
   @ViewChild('drawer') drawer!: MatSidenav;
-  isMobile: boolean = window.innerWidth <= 768;
+  isMobile: boolean = true;
 
   notificationCount = 5; // Example count; you can dynamically update this value
 
@@ -54,9 +54,9 @@ export class LandingPageComponent implements OnInit {
   systemTitle : string = _systemTitle;
   
   ngOnInit(): void {
-    // this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
-    //   this.isMobile = result.matches;
-    // });
+    this.breakpointObserver.observe([Breakpoints.Handset]).subscribe(result => {
+      this.isMobile = result.matches;
+    });
     this.isMobile = window.innerWidth <= 768;
     
     this.username = this.logoutService.getUsername();
