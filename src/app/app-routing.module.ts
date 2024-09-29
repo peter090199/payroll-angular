@@ -85,7 +85,7 @@ const routes: Routes = [
     path: 'protected', 
     component: ProtectedComponent, 
     canActivate: [AuthGuard], 
-   // data: { roles: ['admin', 'user'] } 
+    data: { roles: ['admin', 'user'] } 
   },
 
   // Routes requiring authentication
@@ -93,15 +93,42 @@ const routes: Routes = [
     path: 'header',
     component: LandingPageComponent,
     canActivate: [AuthGuard],
-   // data: { roles: ['admin'] }, // Admin access only
     children: [
-      { path: 'dashboard', component: DashboardUiComponent },
-      { path: 'files/employees', component: EmployeesComponent},
-      { path: 'files/clients', component: ClientsComponent }, // Admin & User access
-      { path: 'user/role', component: UserRoleComponent},
-      { path: 'user/accessrights', component: AccessrightsComponent, },
-      { path: 'user/menus', component: MenusTableComponent},
-      { path: 'user/profile', component: UserProfileUIComponent}
+      { 
+        path: 'dashboard', component: DashboardUiComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
+      },
+      {
+        path: 'files/employees', component: EmployeesComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
+      },
+      { 
+        path: 'files/clients', component: ClientsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
+       },
+      { 
+        path: 'user/role', component: UserRoleComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
+      },
+      { 
+        path: 'user/accessrights', component: AccessrightsComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
+      },
+      { 
+        path: 'user/menus', component: MenusTableComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['admin'] }
+      },
+      {
+         path: 'user/profile', component: UserProfileUIComponent,
+         canActivate: [AuthGuard],
+         data: { roles: ['admin', 'user']}
+      }
     ]
   },
   

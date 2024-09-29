@@ -14,7 +14,9 @@ import { NotificationsService } from 'src/app/Global/notifications.service';
   styleUrls: ['./user-role.component.css']
 })
 export class UserRoleComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'userName', 'role', 'actions'];
+  displayedColumns: string[] = ['userName','firstName','lastName', 'role', 'address',
+    'contactNo','email',
+    'actions'];
   listData = new MatTableDataSource<any>([]);
   isLoading = true;
   placeHolder       : string = "Search";
@@ -61,6 +63,7 @@ export class UserRoleComponent implements OnInit {
     try {
       this.isLoading = true;
       this.users = await firstValueFrom(this.usersService.getUsers());
+      console.log(this.users)
       this.listData.data = this.users;
       this.listData.paginator = this.paginator;
       this.listData.sort = this.sort;

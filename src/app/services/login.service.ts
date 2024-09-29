@@ -80,10 +80,10 @@ userroles()
     if (user) {
       try {
         const parsedUser = JSON.parse(user); // Parse the user data
-        return parsedUser.role || 'user'; // Return the role if it exists, default to 'user'
+        return parsedUser; 
       } catch (error) {
         console.error('Error parsing user data:', error);
-        return 'user'; // Return default role if parsing fails
+        return 'user'; 
       }
     }
     return 'user'; // Return default role if user data is not found

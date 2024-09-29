@@ -1,7 +1,7 @@
 /* src/app/components/employee-list/employee-list.component.css */
-.container {
+.container{
     width: 100%;
-    padding: 16px;
+    padding: 6px;
     box-sizing: border-box;
   }
   .search-div
@@ -13,10 +13,23 @@
 
 }
 
-  .mat-table {
-    width: 100%;
-  }
-  
+mat-table {
+  width: 100%;
+}
+
+mat-table .mat-header-cell {
+  font-size: 12px; /* Font size for header cells */
+  font-weight: bold;
+}
+
+mat-table .mat-cell {
+  font-size: 12px; /* Font size for data cells */
+}
+
+mat-table .mat-cell button {
+  font-size: 11px; /* Font size for buttons in the actions column */
+}
+
   mat-progress-spinner {
     position: absolute;
     top: 50%;
@@ -25,8 +38,25 @@
   }
   
   /* Responsive design adjustments */
-  @media (max-width: 767px) {
-    .mat-table {
+  @media (max-width: 789px) {
+        
+    mat-table {
+      width: 100%;
+    }
+
+    mat-table .mat-header-cell {
+      font-size: 12px; /* Font size for header cells */
+      font-weight: bold;
+    }
+
+    mat-table .mat-cell {
+      font-size: 12px; /* Font size for data cells */
+    }
+
+    mat-table .mat-cell button {
+      font-size: 11px; /* Font size for buttons in the actions column */
+    }
+    mat-table {
       display: block;
       overflow-x: auto;
       white-space: nowrap;
@@ -39,24 +69,8 @@
       font-size: 20px; /* Decrease icon size */
     }
   }
-
-  /* src/app/components/employee-list/employee-list.component.css */
-.container {
-    width: 100%;
-    padding: 16px;
-    box-sizing: border-box;
-    position: relative;
-  }
   
-  .mat-table {
-    width: 100%;
-  }
-  
-  mat-footer-row {
-    display: block;
-  }
-  
-  .mat-footer-cell {
+  mat-footer-cell {
     text-align: center;
     padding: 16px;
     color: rgba(0, 0, 0, 0.54);
@@ -67,7 +81,7 @@
   }
   
   /* Hide paginator if no data */
-  .mat-paginator {
+  mat-paginator {
     display: block;
   }
   
